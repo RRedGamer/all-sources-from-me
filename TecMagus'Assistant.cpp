@@ -21,6 +21,7 @@ int Chap7();
 int Chap8();
 int Chap9();
 int Chap10();
+void GameOver();
 
 int main()
 {
@@ -215,5 +216,12 @@ int Chap9()
 
 int Chap10()
 {
+
+}
+
+void GameOver()
+{
+
+
 
 }

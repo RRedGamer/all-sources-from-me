@@ -1,8 +1,12 @@
 #include <iostream>
-#include <string>
-#include <fstream>
-#include <cmath>
 #include <Windows.h>
+#include <cmath>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
 
 using namespace std;
 

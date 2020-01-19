@@ -94,7 +94,8 @@ int main()
 	cout << endl << endl;
 	cout << "                                                   1. N e w   G a m e                                                   " << endl;
 	cout << "                                                   2. C o n t i n u e                                                   " << endl;
-	cout << "                                                   3.     Q u i t                                                       " << endl;
+	cout << "                                                   3.    L e a r n                                                      " << endl;
+	cout << "                                                   4.     Q u i t                                                       " << endl;
 	Sleep(1000);
 
 	while (selection != "3")
@@ -116,13 +117,15 @@ int main()
 		cout << "\n                                               An educational game about C++\n\n" << endl;
 		cout << "                                                   1. N e w   G a m e\n";
 		cout << "                                                   2. C o n t i n u e\n";
-		cout << "                                                   3.     Q u i t\n\n";
+		cout << "                                                   3.    L e a r n\n";
+		cout << "                                                   4.     Q u i t\n\n";
 		cout << "                                              Enter Number to select option: ";
 		getline(cin, selection);
 		
 		if (selection == "1")		cout << "OwO";
 		else if (selection == "2")	cout << "UwU";
-		else if (selection == "3")	break;
+		else if (selection == "3")	cout << "EwE";
+		else if (selection == "4")	break;
 		else
 		{
 			cout << "                                             Error computing...please try again";

@@ -74,9 +74,12 @@ int main()
 }*/
 
 #include <iostream>
-#include <iomanip>
 #include <Windows.h>
+#include <cmath>
 #include <fstream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -85,9 +88,17 @@ void ContinueGame();
 
 int main()
 {
-	int selection = 0;
+	string selection = "0";
 	
-	//game startup
+	//Game Startup
+	cout << "this game is meant to be played in the current window size" << endl;
+	Sleep(5000);
+	cout << "please do not minimise or maximise the window" << endl;
+	Sleep(5000);
+	system("cls");
+	Sleep(1000);
+
+	//Title Screen
 	Sleep(400);
 	cout << "          __________                            ____  ___                                                        ____" << endl;
 	Sleep(400);
@@ -143,10 +154,11 @@ int main()
 	cout << endl << endl;
 	cout << "                                                   1. N e w   G a m e                                                   " << endl;
 	cout << "                                                   2. C o n t i n u e                                                   " << endl;
-	cout << "                                                   3.     Q u i t                                                       " << endl;
+	cout << "                                                   3.    L e a r n                                                      " << endl;
+	cout << "                                                   4.     Q u i t                                                       " << endl;
 	Sleep(1000);
 
-	while (selection != 3)
+	while (selection != "4")
 	{
 		system("cls");
 		cout << "     +    __________       +           *        ____  ___        *                +        +           *         ____" << endl;
@@ -165,19 +177,27 @@ int main()
 		cout << "\n                                               An educational game about C++\n\n" << endl;
 		cout << "                                                   1. N e w   G a m e\n";
 		cout << "                                                   2. C o n t i n u e\n";
-		cout << "                                                   3.     Q u i t\n\n";
+		cout << "                                                   3.    L e a r n\n";
+		cout << "                                                   4.     Q u i t\n\n";
 		cout << "                                              Enter Number to select option: ";
-		cin >> selection;
+		getline(cin, selection);
 
-		if (selection == 1)
+		if (selection == "1")
 		{
 			NewGame();
 		}
-		else if (selection == 2)
+		else if (selection == "2")
 		{
 			ContinueGame();
 		}
-		else if (selection == 3)		break;
+		else if (selection == "3")
+		{
+			break;
+		}
+		else if (selection == "4")
+		{
+			break;
+		}
 		else
 		{
 			cout << "                                             Error computing...please try again";

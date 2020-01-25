@@ -12,6 +12,8 @@ void NewGame();
 void ContinueGame();
 void LearnCpp();
 void DialogueProcessor(char ChpNum, string name);
+void GameOver();
+bool ChoiceProcessor(string choice);
 int Chap1();
 int Chap2();
 int Chap3();
@@ -22,7 +24,6 @@ int Chap7();
 int Chap8();
 int Chap9();
 int Chap10();
-void GameOver();
 
 int main()
 {
@@ -389,16 +390,26 @@ void LearnCpp()
 
 int Chap1()
 {
-	string choice;
+	bool Answer;
+	string InputChoice;
 	string name = "NULL";
+	DialogueProcessor('1', name);
+	Answer = ChoiceProcessor(InputChoice);
+	if (Answer == true)
+	{
+
+	}
+	else
+	{
+
+	}
 	DialogueProcessor('1', name);
 	ifstream Name("Name.txt");
 	getline(cin, name);
 	cout << "screen: is " << name << " your name? (Y/N) ";
-	getline(cin, choice);
-	if (choice == "Y" || choice == "y" || choice )
-
-	cout << ""
+	getline(cin, InputChoice);
+	Answer = ChoiceProcessor(InputChoice);
+	cout << "";
 
 
 	return 1;
@@ -475,74 +486,144 @@ int Chap10()
 
 void DialogueProcessor(char ChpNum, string name)
 {
-	int DSS;
-	fstream DSStxt;
-	string dialogue, Dfilename;
-	ifstream Dialogue;
+	int DSaveState;
+	string DialogueOutput, Dfilename;
+	ifstream DialogueTxt;
+	fstream DSaveStateTxt;
 	char FilenameBuilder[20] = { 'D','i','a','l','o','g','u','e','C','h','p', ChpNum, '.', 't', 'x', 't' };
 	Dfilename = FilenameBuilder;
 
-	Dialogue.open(Dfilename);
-	DSStxt.open("DialogueSaveState.txt", fstream::in);
-	DSStxt >> DSS;
-	DSStxt.close();
-
-	for (int counter = 1; counter <= (DSS - 1);)
+	DialogueTxt.open(Dfilename);
+	if (!DialogueTxt)
 	{
-		Dialogue >> dialogue;
-		if (dialogue == "n/")	counter++;
-		system("CLS");
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(1000);
 	}
-	while (!Dialogue.eof())
+	else
 	{
-		Dialogue >> dialogue;
-		if (dialogue == "n/")
+		DSaveStateTxt.open("DialogueSaveState.txt", fstream::in);
+		if (!DSaveStateTxt)
 		{
-			DSStxt.open("DialogueSaveState.txt", fstream::out);
-			cout << endl;
-			DSS++;
-			DSStxt << DSS;
-			DSStxt.close();
-			cin.get();
-			system("CLS");
-		}
-		else if (dialogue == ".")
-		{
-			cout << dialogue << " ";
-			Sleep(200);
-		}
-		else if (dialogue == "[name]:")
-		{
-			cout << name << " ";
-			Sleep(80);
-		}
-		else if (dialogue == "[break]")
-		{
-
-		}
-		else if (dialogue == "[reset]")
-		{
-			DSStxt.open("DialogueSaveState.txt", fstream::out);
-			cout << endl;
-			DSStxt << "0";
-			DSStxt.close();
-			cin.get();
-			system("CLS");
-			break;
-		}
-		else if (dialogue == "(Y/N)")
-		{
-			DSStxt.open("DialogueSaveState.txt", fstream::out);
-			cout << endl;
-			DSS++;
-			DSStxt << DSS;
-			DSStxt.close();
-			break;
+			system("cls");
+			cout << "Error accessing file" << endl;
+			Sleep(1000);
 		}
 		else
 		{
-			cout << dialogue << " ";
-			Sleep(80);
+			DSaveStateTxt >> DSaveState;
+			DSaveStateTxt.close();
+			for (int counter = 1; counter <= (DSaveState - 1);)
+			{
+				DialogueTxt >> DialogueOutput;
+				if (DialogueOutput == "n/")	counter++;
+				system("CLS");
+			}
+			while (!DialogueTxt.eof())
+			{
+				DialogueTxt >> DialogueOutput;
+				if (DialogueOutput == "n/")
+				{
+					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
+					if (!DSaveStateTxt)
+					{
+						system("cls");
+						cout << "Error accessing file" << endl;
+						Sleep(1000);
+						break;
+					}
+					else
+					{
+						cout << endl;
+						DSaveState++;
+						DSaveStateTxt << DSaveState;
+						DSaveStateTxt.close();
+						cin.get();
+						system("CLS");
+					}
+				}
+				else if (DialogueOutput == "[reset]")
+				{
+					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
+					if (!DSaveStateTxt)
+					{
+						system("cls");
+						cout << "Error accessing file" << endl;
+						Sleep(1000);
+						break;
+					}
+					else
+					{
+						cout << endl;
+						DSaveStateTxt << "0";
+						DSaveStateTxt.close();
+						cin.get();
+						system("CLS");
+						break;
+					}
+				}
+				else if (DialogueOutput == "(Y/N)")
+				{
+					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
+					if (!DSaveStateTxt)
+					{
+						system("cls");
+						cout << "Error accessing file" << endl;
+						Sleep(1000);
+						break;
+					}
+					else
+					{
+						cout << endl;
+						DSaveState++;
+						DSaveStateTxt << DSaveState;
+						DSaveStateTxt.close();
+						break;
+					}
+				}
+				else if (DialogueOutput == ".")
+				{
+					cout << DialogueOutput << " ";
+					Sleep(200);
+				}
+				else if (DialogueOutput == "[name]:")
+				{
+					cout << name << " ";
+					Sleep(80);
+				}
+				else if (DialogueOutput == "[break]")
+				{
+					cin.get();
+					system("CLS");
+					break;
+				}
+				else
+				{
+					cout << DialogueOutput << " ";
+					Sleep(80);
+				}
+			}
+		}
+	}
+}
+bool ChoiceProcessor(string choice)
+{
+	int LoopForever = 0;
+	while (LoopForever = 0)
+	{
+		if (choice == "Y" || choice == "y" || choice == "YES" || choice == "Yes" || choice == "yes")
+		{ 
+			return true; break;
+		}
+		else if (choice == "N" || choice == "n" || choice == "NO" || choice == "No" || choice == "no")
+		{
+			return false; break;
+		}
+		else
+		{
+			system("cls");
+			cout << "Sorry but that input is invalid, please try again: ";
+			getline(cin, choice);
 		}
 	}
 }

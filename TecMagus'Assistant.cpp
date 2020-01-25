@@ -11,7 +11,7 @@ using namespace std;
 void NewGame();
 void ContinueGame();
 void LearnCpp();
-void DialogueProcessor(char ChpNum);
+void DialogueProcessor(char ChpNum, string name);
 int Chap1();
 int Chap2();
 int Chap3();
@@ -25,12 +25,6 @@ int Chap10();
 void GameOver();
 
 int main()
-{
-	DialogueProcessor('1');
-	return 0;
-}
-
-/*int main()
 {
 	string selection = "0";
 
@@ -382,7 +376,7 @@ void LearnCpp()
 		ifstream ChapSave("ChapSaveState.txt");
 		if (!ChapSave)
 		{
-			system("CLS");
+			system("cls");
 			cout << "Error accessing file" << endl;
 			break;
 		}
@@ -391,13 +385,95 @@ void LearnCpp()
 			
 		}
 	}
+}
 
-	
+int Chap1()
+{
+	string choice;
+	string name = "NULL";
+	DialogueProcessor('1', name);
+	ifstream Name("Name.txt");
+	getline(cin, name);
+	cout << "screen: is " << name << " your name? (Y/N) ";
+	getline(cin, choice);
+	if (choice == "Y" || choice == "y" || choice )
 
-	
-}*/
+	cout << ""
 
-void DialogueProcessor(char ChpNum)
+
+	return 1;
+}
+
+int Chap2()
+{
+	char nameinput[9999];
+	ifstream Name("Name.txt");
+	if (!Name)
+	{
+
+	}
+	else
+	{
+		while (!Name.eof())
+		{
+			Name >> nameinput;
+			
+			if (!Name.fail())	break;
+		}
+	}
+	DialogueProcessor('2', nameinput);
+	return 2;
+}
+
+int Chap3()
+{
+	DialogueProcessor('3');
+	return 3;
+}
+
+int Chap4()
+{
+	DialogueProcessor('4');
+	return 4;
+}
+
+int Chap5()
+{
+	DialogueProcessor('5');
+	return 5;
+}
+
+int Chap6()
+{
+	DialogueProcessor('6');
+	return 6;
+}
+
+int Chap7()
+{
+	DialogueProcessor('7');
+	return 7;
+}
+
+int Chap8()
+{
+	DialogueProcessor('8');
+	return 8;
+}
+
+int Chap9()
+{
+	DialogueProcessor('9');
+	return 9;
+}
+
+int Chap10()
+{
+	DialogueProcessor('10');
+	return 10;
+}
+
+void DialogueProcessor(char ChpNum, string name)
 {
 	int DSS;
 	fstream DSStxt;
@@ -406,12 +482,12 @@ void DialogueProcessor(char ChpNum)
 	char FilenameBuilder[20] = { 'D','i','a','l','o','g','u','e','C','h','p', ChpNum, '.', 't', 'x', 't' };
 	Dfilename = FilenameBuilder;
 
-	Dialogue.open(Dfilename); 
+	Dialogue.open(Dfilename);
 	DSStxt.open("DialogueSaveState.txt", fstream::in);
 	DSStxt >> DSS;
 	DSStxt.close();
 
-	for (int counter = 1; counter <= (DSS - 1) ;)
+	for (int counter = 1; counter <= (DSS - 1);)
 	{
 		Dialogue >> dialogue;
 		if (dialogue == "n/")	counter++;
@@ -435,6 +511,25 @@ void DialogueProcessor(char ChpNum)
 			cout << dialogue << " ";
 			Sleep(200);
 		}
+		else if (dialogue == "[name]:")
+		{
+			cout << name << " ";
+			Sleep(80);
+		}
+		else if (dialogue == "[break]")
+		{
+
+		}
+		else if (dialogue == "[reset]")
+		{
+			DSStxt.open("DialogueSaveState.txt", fstream::out);
+			cout << endl;
+			DSStxt << "0";
+			DSStxt.close();
+			cin.get();
+			system("CLS");
+			break;
+		}
 		else if (dialogue == "(Y/N)")
 		{
 			DSStxt.open("DialogueSaveState.txt", fstream::out);
@@ -450,60 +545,6 @@ void DialogueProcessor(char ChpNum)
 			Sleep(80);
 		}
 	}
-}
-
-int Chap1()
-{
-
-	return 0;
-}
-
-int Chap2()
-{
-	
-	return 0;
-}
-
-int Chap3()
-{
-	return 0;
-
-
-}
-
-int Chap4()
-{
-	return 0;
-}
-
-int Chap5()
-{
-	return 0;
-}
-
-int Chap6()
-{
-	return 0;
-}
-
-int Chap7()
-{
-	return 0;
-}
-
-int Chap8()
-{
-	return 0;
-}
-
-int Chap9()
-{
-	return 0;
-}
-
-int Chap10()
-{
-	return 0;
 }
 
 void GameOver()

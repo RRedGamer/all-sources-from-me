@@ -11,7 +11,7 @@ using namespace std;
 void NewGame();
 void ContinueGame();
 void LearnCpp();
-void DialogueProcessor(ifstream Dialogue);
+void DialogueProcessor(char ChpNum);
 int Chap1();
 int Chap2();
 int Chap3();
@@ -26,10 +26,7 @@ void GameOver();
 
 int main()
 {
-	ifstream Dialogue;
-	Dialogue.open("DialogueChp1.txt"); // this will depend on which text file you use lmaooo
-	DialogueProcessor(Dialogue);
-	Dialogue.close();
+	DialogueProcessor('1');
 	return 0;
 }
 
@@ -400,12 +397,16 @@ void LearnCpp()
 	
 }*/
 
-void DialogueProcessor(ifstream Dialogue)
+void DialogueProcessor(char ChpNum)
 {
 	int DSS;
 	fstream DSStxt;
-	string dialogue;
+	string dialogue, Dfilename;
+	ifstream Dialogue;
+	char FilenameBuilder[20] = { 'D','i','a','l','o','g','u','e','C','h','p', ChpNum, '.', 't', 'x', 't' };
+	Dfilename = FilenameBuilder;
 
+	Dialogue.open(Dfilename); 
 	DSStxt.open("DialogueSaveState.txt", fstream::in);
 	DSStxt >> DSS;
 	DSStxt.close();
@@ -432,16 +433,21 @@ void DialogueProcessor(ifstream Dialogue)
 		else if (dialogue == ".")
 		{
 			cout << dialogue << " ";
-			Sleep(250);
+			Sleep(200);
 		}
 		else if (dialogue == "(Y/N)")
 		{
+			DSStxt.open("DialogueSaveState.txt", fstream::out);
+			cout << endl;
+			DSS++;
+			DSStxt << DSS;
+			DSStxt.close();
 			break;
 		}
 		else
 		{
 			cout << dialogue << " ";
-			Sleep(50);
+			Sleep(80);
 		}
 	}
 }

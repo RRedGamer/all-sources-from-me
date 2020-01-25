@@ -393,15 +393,38 @@ int Chap1()
 	bool Answer;
 	string InputChoice;
 	string name = "NULL";
+	ofstream DialogueJump;
 	DialogueProcessor('1', name);
 	Answer = ChoiceProcessor(InputChoice);
 	if (Answer == true)
 	{
+		DialogueJump.open("DialogueSaveState.txt");
+		if (!DialogueJump)
+		{
+			system("cls");
+			cout << "Error accessing file" << endl;
+			Sleep(1000);
+		}
+		else
+		{
+			DialogueJump << "41";
 
+		}
 	}
-	else
+	else 
 	{
+		DialogueJump.open("DialogueSaveState.txt");
+		if (!DialogueJump)
+		{
+			system("cls");
+			cout << "Error accessing file" << endl;
+			Sleep(1000);
+		}
+		else
+		{
+			DialogueJump << "41";
 
+		}
 	}
 	DialogueProcessor('1', name);
 	ifstream Name("Name.txt");

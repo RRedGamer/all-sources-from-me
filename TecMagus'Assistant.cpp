@@ -14,6 +14,7 @@ void LearnCpp();
 void DialogueProcessor(char ChpNum, string name);
 void GameOver();
 bool ChoiceProcessor(string choice);
+void ChapterProcessor();
 int Chap1();
 int Chap2();
 int Chap3();
@@ -62,14 +63,18 @@ int main()
 	string selection = "0";
 
 	//Game Startup
-	cout << "this game is meant to be played in the current window size" << endl;
+	cout << "This game is meant to be played in the current window size." << endl;
 	Sleep(3000);
-	cout << "please do not minimise or maximise the window" << endl;
+	cout << "Please do not minimise or maximise the window." << endl;
 	Sleep(3000);
-	cout << "to progress the text, press enter at the end of each line" << endl;
-	Sleep(5000);
-	system("cls");
+	cout << "To progress the text, press enter at the end of each line." << endl;
+	Sleep(3000);
+	cout << "This game is able to auto save, so if you need to exit to the menu at any time, press the X on the top right" << endl;
+	Sleep(6000);
+	system("color 08");
 	Sleep(1000);
+	system("cls");
+	Sleep(2000);
 
 	//Title Screen
 	Sleep(400);
@@ -253,8 +258,8 @@ void NewGame()
 			}
 
 			GameCompletionStateTxt.close();
-
-			GameCS = 1;
+			ChapterProcessor();
+			return;
 		}
 		else if (GameCS == 1 || GameCS == 2)
 		{
@@ -319,10 +324,10 @@ void NewGame()
 		{
 			cout << "                                   The savestate has been tampered with, please reset" << endl;
 			Sleep(500);
-			cout << "                                 1. go to ChapSaveState.txt to change the values" << endl;
+			cout << "                              1. go to GameCompletionState.txt to change the values" << endl;
 			Sleep(500);
-			cout << "                                 2. change to 0 if you have not started or 1 if you have started" << endl;
-			Sleep(1200); 
+			cout << "                              2. change to 0 if you have not started or 1 if you have started" << endl;
+			Sleep(3000);
 			return;
 		}
 	}
@@ -370,7 +375,7 @@ void ContinueGame()
 			if (GameCS == 0)
 				cout << "\n                            A save file currently does not exist, do you want to make a new one?\n" << endl;
 			else
-				cout << "\n"
+				cout << "\n                           You have currently completed the whole game, do you want to start over?\n" << endl;
 			cout << "                                                         1 . Y e s" << endl;
 			cout << "                                                         2 . N o\n" << endl;
 			cout << "                                                Enter Number to select option: ";
@@ -378,7 +383,20 @@ void ContinueGame()
 
 			if (StartNewGame == "1")
 			{
+				GameCompletionStateTxt.open("GameCompletionState.txt", fstream::out);
+
+				if (!GameCompletionStateTxt)
+				{
+					system("CLS");
+					cout << "Error accessing file" << endl;
+					return;
+				}
+				else
+					GameCompletionStateTxt << "0";
+
+				GameCompletionStateTxt.close();
 				NewGame();
+				return;
 			}
 			else if (StartNewGame == "2")
 			{
@@ -415,22 +433,23 @@ void ContinueGame()
 			Sleep(800);
 			cout << ".";
 			Sleep(800);
-
-			GameCS = 1;
+			ChapterProcessor();
+			return;
 		}
 		else
 		{
 			cout << "                                   The savestate has been tampered with, please reset" << endl;
 			Sleep(500);
-			cout << "                                 1. go to ChapSaveState.txt to change the values" << endl;
+			cout << "                              1. go to GameCompletionState.txt to change the values" << endl;
 			Sleep(500);
-			cout << "                                 2. change to 0 if you have not started or 1 if you have started" << endl;
-			Sleep(1200);
+			cout << "                              2. change to 0 if you have not started or 1 if you have started" << endl;
+			Sleep(3000);
 			return;
 		}
 	}
-	system("CLS");
 }
+
+
 
 void LearnCpp()
 {
@@ -450,6 +469,49 @@ void LearnCpp()
 		}
 	}
 }
+
+
+
+void ChapterProcessor()
+{
+	int ChpSS;
+	fstream ChapSaveState;
+
+	ChapSaveState.open("ChapSaveState.txt");
+	if (!ChapSaveState)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		return;
+	}
+	else	ChapSaveState >> ChpSS;
+
+	while (ChpSS != 10)
+	{
+		if (ChpSS == 0)			ChpSS = Chap1();
+		else if (ChpSS == 1)	ChpSS = Chap2();
+		else if (ChpSS == 2)	ChpSS = Chap3();
+		else if (ChpSS == 3)	ChpSS = Chap4();
+		else if (ChpSS == 4)	ChpSS = Chap5();
+		else if (ChpSS == 5)	ChpSS = Chap6();
+		else if (ChpSS == 6)	ChpSS = Chap7();
+		else if (ChpSS == 7)	ChpSS = Chap8();
+		else if (ChpSS == 8)	ChpSS = Chap9();
+		else if (ChpSS == 9)	ChpSS = Chap10();
+		else 
+		{
+			cout << "                                   The savestate has been tampered with, please reset" << endl;
+			Sleep(500);
+			cout << "                              1. go to GameCompletionState.txt to change the values" << endl;
+			Sleep(500);
+			cout << "                              2. change to 0 if you have not started or 1 if you have started" << endl;
+			Sleep(3000);
+			return;
+		}
+	}
+}
+
+
 
 int Chap1()
 {
@@ -477,7 +539,7 @@ int Chap1()
 	}
 	else 
 	{
-		DialogueProcessor("1", name);
+		DialogueProcessor('1', name);
 		GameOver();
 		return 0;
 	}

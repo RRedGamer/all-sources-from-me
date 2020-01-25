@@ -11,7 +11,7 @@ using namespace std;
 void NewGame();
 void ContinueGame();
 void LearnCpp();
-void DialogueProcessor();
+void DialogueProcessor(ifstream Dialogue);
 int Chap1();
 int Chap2();
 int Chap3();
@@ -26,7 +26,10 @@ void GameOver();
 
 int main()
 {
-	DialogueProcessor();
+	ifstream Dialogue;
+	Dialogue.open("DialogueChp1.txt"); // this will depend on which text file you use lmaooo
+	DialogueProcessor(Dialogue);
+	Dialogue.close();
 	return 0;
 }
 
@@ -397,14 +400,12 @@ void LearnCpp()
 	
 }*/
 
-void DialogueProcessor()
+void DialogueProcessor(ifstream Dialogue)
 {
 	int DSS;
-	ifstream Dialogue;
 	fstream DSStxt;
 	string dialogue;
 
-	Dialogue.open("DialogueChp1.txt"); // this will depend on which text file you use lmaooo
 	DSStxt.open("DialogueSaveState.txt", fstream::in);
 	DSStxt >> DSS;
 	DSStxt.close();
@@ -415,7 +416,6 @@ void DialogueProcessor()
 		if (dialogue == "n/")	counter++;
 		system("CLS");
 	}
-
 	while (!Dialogue.eof())
 	{
 		Dialogue >> dialogue;
@@ -433,6 +433,10 @@ void DialogueProcessor()
 		{
 			cout << dialogue << " ";
 			Sleep(250);
+		}
+		else if (dialogue == "(Y/N)")
+		{
+			break;
 		}
 		else
 		{

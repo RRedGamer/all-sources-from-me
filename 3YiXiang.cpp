@@ -83,7 +83,7 @@ int main()
 
 using namespace std;
 
-void NewGame();
+/*void NewGame();
 void ContinueGame();
 
 int main()
@@ -412,4 +412,41 @@ void ContinueGame()
 		}
 	}
 	system("CLS");
+}*/
+
+int main()
+{
+	int MaxLength;
+	string LineOfGraphics;
+
+	fstream Graphics;
+	Graphics.open("Graphics.txt", fstream::in);
+
+	if (!Graphics)
+		cout << "Fek" << endl;
+	else
+	{	
+		while (!Graphics.eof())
+		{
+			Graphics >> LineOfGraphics;
+			if (Graphics.fail())			break;
+
+			MaxLength = LineOfGraphics.length();
+
+			for (int i = 0; i <= MaxLength; i++)
+			{
+				if (LineOfGraphics.substr(i, 1) == "?")
+					cout << " ";
+				else
+					cout << LineOfGraphics.substr(i, 1);
+			}
+
+			cout << endl;
+		}
+	}
+
+	Graphics.close();
+
+	system("pause");
+	return 0;
 }

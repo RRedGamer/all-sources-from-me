@@ -25,14 +25,48 @@ int Chap8();
 int Chap9();
 int Chap10();
 
+/*int main()
+{
+	int LoopForever = 0;
+	string choice, choice2;
+	bool yes;
+	double yeee;
+	cout << "enter sth you twat: ";
+	getline(cin, choice);
+	while (LoopForever = 0)
+	{
+		if (choice == "Y" || choice == "y" || choice == "YES" || choice == "Yes" || choice == "yes")
+		{
+			yes = 1;
+		}
+		else if (choice == "N" || choice == "n" || choice == "NO" || choice == "No" || choice == "no")
+		{
+			yes = 0;
+		}
+		else
+		{
+			system("cls");
+			cout << "Sorry but that input is invalid, please try again: ";
+			getline(cin, choice2);
+			choice = choice2;
+		}
+	}
+	cout << choice << endl;
+	system("pause");
+
+	return 0;
+}*/
+
 int main()
 {
 	string selection = "0";
 
 	//Game Startup
 	cout << "this game is meant to be played in the current window size" << endl;
-	Sleep(5000);
+	Sleep(3000);
 	cout << "please do not minimise or maximise the window" << endl;
+	Sleep(3000);
+	cout << "to progress the text, press enter at the end of each line" << endl;
 	Sleep(5000);
 	system("cls");
 	Sleep(1000);
@@ -145,12 +179,6 @@ int main()
 			cout << "                                             Error computing...please try again";
 			Sleep(1200);
 		}
-
-
-
-
-
-
 	}
 
 	system("cls");
@@ -167,8 +195,22 @@ int main()
 
 void NewGame()
 {
-	int GameState = 0, LoopForever = 0;
+	int GameCS, LoopForever = 0;
 	string ResetFile;
+	fstream GameCompletionStateTxt;
+	GameCompletionStateTxt.open("GameCompletionState.txt", fstream::in);
+
+
+	if (!GameCompletionStateTxt)
+	{
+		system("CLS");
+		cout << "Error accessing file" << endl;
+		return;
+	}
+	else
+		GameCompletionStateTxt >> GameCS;
+
+	GameCompletionStateTxt.close();
 
 	while (LoopForever == 0)
 	{
@@ -186,21 +228,7 @@ void NewGame()
 		cout << "  /__/   |__|  /_______/ +/_______/  /___/  /_______/     /___/   + /________/|_|  /____/ /__/     /___/     *" << endl;
 		cout << " *  .     +          .         *      .          +            .      .          +        .    .        +" << endl;
 
-		fstream SaveState;
-		SaveState.open("SaveState.txt", fstream::in);
-
-		if (!SaveState)
-		{
-			system("CLS");
-			cout << "Error accessing file" << endl;
-			break;
-		}
-		else
-			SaveState >> GameState;
-
-		SaveState.close();
-
-		if (GameState == 0)
+		if (GameCS == 0)
 		{
 			cout << "\n                                                 New game starting";
 			Sleep(800);
@@ -211,31 +239,30 @@ void NewGame()
 			cout << ".";
 			Sleep(800);
 
-			SaveState.open("SaveState.txt", fstream::out);
+			GameCompletionStateTxt.open("GameCompletionState.txt", fstream::out);
 
-			if (!SaveState)
+			if (!GameCompletionStateTxt)
 			{
 				system("CLS");
 				cout << "Error accessing file" << endl;
-				break;
+				return;
 			}
 			else
 			{
-				SaveState << "1";
-				if (SaveState.fail())			break;
+				GameCompletionStateTxt << "1";
 			}
 
-			SaveState.close();
+			GameCompletionStateTxt.close();
 
-			GameState = 1;
+			GameCS = 1;
 		}
-		else if (GameState == 1 || GameState == 2)
+		else if (GameCS == 1 || GameCS == 2)
 		{
-			if (GameState == 1)
+			if (GameCS == 1)
 			{
 				cout << "\n                               A save file currently exists, do you want to override it?\n" << endl;
 			}
-			else if (GameState == 2)
+			else
 			{
 				cout << "\n                           A FULLY completed save file currently exists, do you want to override it?\n" << endl;
 			}
@@ -246,26 +273,32 @@ void NewGame()
 
 			if (ResetFile == "1")
 			{
-				SaveState.open("SaveState.txt", fstream::out);
+				GameCompletionStateTxt.open("GameCompletionState.txt", fstream::out);
 
-				if (!SaveState)
+				if (!GameCompletionStateTxt)
 				{
 					system("CLS");
 					cout << "Error accessing file" << endl;
-					break;
+					return;
 				}
 				else
 				{
-					SaveState << "0";
-					if (SaveState.fail())			break;
+					GameCompletionStateTxt << "0";
 				}
 
-				SaveState.close();
+				GameCompletionStateTxt.close();
 
 				cout << "                                                         File Wiped!";
 			}
 			else if (ResetFile == "2")
 			{
+				system("CLS");
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
 				cout << "                                                  Returning to menu screen";
 				Sleep(800);
 				cout << ".";
@@ -274,22 +307,47 @@ void NewGame()
 				Sleep(800);
 				cout << ".";
 				Sleep(800);
-				break;
+				return;
+			}
+			else
+			{
+				cout << "\n\n                                             Error computing...please try again";
+				Sleep(1200);
 			}
 		}
 		else
 		{
-			cout << "                                             The savestate has been tampered with, please reset";
-			Sleep(1200);
+			cout << "                                   The savestate has been tampered with, please reset" << endl;
+			Sleep(500);
+			cout << "                                 1. go to ChapSaveState.txt to change the values" << endl;
+			Sleep(500);
+			cout << "                                 2. change to 0 if you have not started or 1 if you have started" << endl;
+			Sleep(1200); 
+			return;
 		}
 	}
-	system("CLS");
 }
+
+
 
 void ContinueGame()
 {
-	int GameState = 0, LoopForever = 0;
+	int GameCS, LoopForever = 0;
 	string StartNewGame;
+	fstream GameCompletionStateTxt;
+
+	GameCompletionStateTxt.open("GameCompletionState.txt", fstream::in);
+
+	if (!GameCompletionStateTxt)
+	{
+		system("CLS");
+		cout << "Error accessing file" << endl;
+		return;
+	}
+	else
+		GameCompletionStateTxt >> GameCS;
+
+	GameCompletionStateTxt.close();
 
 	while (LoopForever == 0)
 	{
@@ -307,23 +365,12 @@ void ContinueGame()
 		cout << "  /__/   |__|  /_______/ +/_______/  /___/  /_______/     /___/   + /________/|_|  /____/ /__/     /___/     *" << endl;
 		cout << " *  .     +          .         *      .          +            .      .          +        .    .        +" << endl;
 
-		fstream SaveState;
-		SaveState.open("GameCompletionState.txt", fstream::in);
-
-		if (!SaveState)
+		if (GameCS == 0 || GameCS == 2)
 		{
-			system("CLS");
-			cout << "Error accessing file" << endl;
-			break;
-		}
-		else
-			SaveState >> GameState;
-
-		SaveState.close();
-
-		if (GameState == 0)
-		{
-			cout << "\n                            A save file currently does not exist, do you want to make a new one?\n" << endl;
+			if (GameCS == 0)
+				cout << "\n                            A save file currently does not exist, do you want to make a new one?\n" << endl;
+			else
+				cout << "\n"
 			cout << "                                                         1 . Y e s" << endl;
 			cout << "                                                         2 . N o\n" << endl;
 			cout << "                                                Enter Number to select option: ";
@@ -332,10 +379,16 @@ void ContinueGame()
 			if (StartNewGame == "1")
 			{
 				NewGame();
-				break;
 			}
 			else if (StartNewGame == "2")
 			{
+				system("CLS");
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
+				cout << endl;
 				cout << "                                                  Returning to menu screen";
 				Sleep(800);
 				cout << ".";
@@ -344,12 +397,17 @@ void ContinueGame()
 				Sleep(800);
 				cout << ".";
 				Sleep(800);
+				return;
 			}
-			break;
+			else
+			{
+				cout << "\n\n                                             Error computing...please try again";
+				Sleep(1200);
+			}
 		}
-		else if (GameState == 1)
+		else if (GameCS == 1)
 		{
-			cout << "\n                                                        Starting Game";
+			cout << "\n                                                   Continuing Game";
 			Sleep(800);
 			cout << ".";
 			Sleep(800);
@@ -358,12 +416,17 @@ void ContinueGame()
 			cout << ".";
 			Sleep(800);
 
-			GameStart = 1;
+			GameCS = 1;
 		}
 		else
 		{
-			cout << "                                             The savestate has been tampered with, please reset";
+			cout << "                                   The savestate has been tampered with, please reset" << endl;
+			Sleep(500);
+			cout << "                                 1. go to ChapSaveState.txt to change the values" << endl;
+			Sleep(500);
+			cout << "                                 2. change to 0 if you have not started or 1 if you have started" << endl;
 			Sleep(1200);
+			return;
 		}
 	}
 	system("CLS");
@@ -404,27 +467,19 @@ int Chap1()
 			system("cls");
 			cout << "Error accessing file" << endl;
 			Sleep(1000);
+			return 0;
 		}
 		else
 		{
 			DialogueJump << "41";
-
+			DialogueJump.close();
 		}
 	}
 	else 
 	{
-		DialogueJump.open("DialogueSaveState.txt");
-		if (!DialogueJump)
-		{
-			system("cls");
-			cout << "Error accessing file" << endl;
-			Sleep(1000);
-		}
-		else
-		{
-			DialogueJump << "41";
-
-		}
+		DialogueProcessor("1", name);
+		GameOver();
+		return 0;
 	}
 	DialogueProcessor('1', name);
 	ifstream Name("Name.txt");
@@ -522,6 +577,7 @@ void DialogueProcessor(char ChpNum, string name)
 		system("cls");
 		cout << "Error accessing file" << endl;
 		Sleep(1000);
+		return;
 	}
 	else
 	{
@@ -531,6 +587,7 @@ void DialogueProcessor(char ChpNum, string name)
 			system("cls");
 			cout << "Error accessing file" << endl;
 			Sleep(1000);
+			return;
 		}
 		else
 		{
@@ -553,7 +610,7 @@ void DialogueProcessor(char ChpNum, string name)
 						system("cls");
 						cout << "Error accessing file" << endl;
 						Sleep(1000);
-						break;
+						return;
 					}
 					else
 					{
@@ -563,26 +620,6 @@ void DialogueProcessor(char ChpNum, string name)
 						DSaveStateTxt.close();
 						cin.get();
 						system("CLS");
-					}
-				}
-				else if (DialogueOutput == "[reset]")
-				{
-					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
-					if (!DSaveStateTxt)
-					{
-						system("cls");
-						cout << "Error accessing file" << endl;
-						Sleep(1000);
-						break;
-					}
-					else
-					{
-						cout << endl;
-						DSaveStateTxt << "0";
-						DSaveStateTxt.close();
-						cin.get();
-						system("CLS");
-						break;
 					}
 				}
 				else if (DialogueOutput == "(Y/N)")
@@ -593,7 +630,7 @@ void DialogueProcessor(char ChpNum, string name)
 						system("cls");
 						cout << "Error accessing file" << endl;
 						Sleep(1000);
-						break;
+						return;
 					}
 					else
 					{
@@ -601,7 +638,7 @@ void DialogueProcessor(char ChpNum, string name)
 						DSaveState++;
 						DSaveStateTxt << DSaveState;
 						DSaveStateTxt.close();
-						break;
+						return;
 					}
 				}
 				else if (DialogueOutput == ".")
@@ -618,7 +655,7 @@ void DialogueProcessor(char ChpNum, string name)
 				{
 					cin.get();
 					system("CLS");
-					break;
+					return;
 				}
 				else
 				{
@@ -629,31 +666,72 @@ void DialogueProcessor(char ChpNum, string name)
 		}
 	}
 }
+
 bool ChoiceProcessor(string choice)
 {
+	string choice2;
 	int LoopForever = 0;
 	while (LoopForever = 0)
 	{
 		if (choice == "Y" || choice == "y" || choice == "YES" || choice == "Yes" || choice == "yes")
 		{ 
-			return true; break;
+			return 1;
 		}
 		else if (choice == "N" || choice == "n" || choice == "NO" || choice == "No" || choice == "no")
 		{
-			return false; break;
+			return 0;
 		}
 		else
 		{
 			system("cls");
 			cout << "Sorry but that input is invalid, please try again: ";
-			getline(cin, choice);
+			getline(cin, choice2);
+			choice = choice2;
 		}
 	}
 }
 
 void GameOver()
 {
+	Sleep(500);
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "                                                    ";
+	cout << "G";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "A";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "M";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "E";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "O";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "V";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "E";	Sleep(150);
+	cout << " ";	Sleep(150);
+	cout << "R";
 
+	Sleep(2000);
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "                                               ";
+	system("pause");
+	Sleep(1000);
+	system("color 08");
+	Sleep(1000);
+	system("cls");
+	Sleep(4000);
 }
 
 /*#include <iostream>

@@ -11,7 +11,7 @@ using namespace std;
 void NewGame();
 void ContinueGame();
 void LearnCpp();
-int Dialogue();
+void DialogueProcessor();
 int Chap1();
 int Chap2();
 int Chap3();
@@ -25,6 +25,12 @@ int Chap10();
 void GameOver();
 
 int main()
+{
+	DialogueProcessor();
+	return 0;
+}
+
+/*int main()
 {
 	string selection = "0";
 
@@ -381,31 +387,71 @@ void LearnCpp()
 			break;
 		}
 		else
-			cout << "nigger" << endl;
+		{
+			
+		}
 	}
 
 	
 
 	
-}
+}*/
 
-int Dialogue()
+void DialogueProcessor()
 {
-	// aaron you put the finalised text processing thing here please
-	return 0;
+	int DSS;
+	ifstream Dialogue;
+	fstream DSStxt;
+	string dialogue;
+
+	Dialogue.open("DialogueChp1.txt"); // this will depend on which text file you use lmaooo
+	DSStxt.open("DialogueSaveState.txt", fstream::in);
+	DSStxt >> DSS;
+	DSStxt.close();
+
+	for (int counter = 1; counter <= (DSS - 1) ;)
+	{
+		Dialogue >> dialogue;
+		if (dialogue == "n/")	counter++;
+		system("CLS");
+	}
+
+	while (!Dialogue.eof())
+	{
+		Dialogue >> dialogue;
+		if (dialogue == "n/")
+		{
+			DSStxt.open("DialogueSaveState.txt", fstream::out);
+			cout << endl;
+			DSS++;
+			DSStxt << DSS;
+			DSStxt.close();
+			cin.get();
+			system("CLS");
+		}
+		else if (dialogue == ".")
+		{
+			cout << dialogue << " ";
+			Sleep(250);
+		}
+		else
+		{
+			cout << dialogue << " ";
+			Sleep(50);
+		}
+	}
 }
 
 int Chap1()
 {
+
 	return 0;
-
-
 }
 
 int Chap2()
 {
+	
 	return 0;
-
 }
 
 int Chap3()
@@ -454,3 +500,69 @@ void GameOver()
 {
 
 }
+
+/*#include <iostream>
+#include <Windows.h>
+#include <cmath>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+using namespace std;
+int main()
+{
+  int LetterCount, CurrentLetter, ScrollSpeed;
+	string ExportedWord;
+	fstream Dialogue;
+	Dialogue.open("Dialogue.txt", fstream::in);
+	if (!Dialogue)
+		cout << "Error: Dialogue file not present!" << endl;
+	else
+	{
+		while (!Dialogue.eof())
+		{
+			Dialogue >> ExportedWord;
+			LetterCount = ExportedWord.length();
+			if (ExportedWord.substr(0, 1) == "x")
+			{
+				if (ExportedWord.substr(1, 1) == ".")
+					ScrollSpeed = 500;
+				else
+					ScrollSpeed = 100;
+				CurrentLetter = 1;
+				while (LetterCount != CurrentLetter)
+				{
+					cout << ExportedWord.substr(CurrentLetter, 1);
+					Sleep(ScrollSpeed);
+					CurrentLetter++;
+				}
+				cout << " ";
+			}
+			else
+			{
+				if (ExportedWord == "n/")
+				{
+					Sleep(3000);
+					cout << endl;
+				}
+				else
+				{
+					CurrentLetter = 0;
+					while (LetterCount != CurrentLetter)
+					{
+						cout << ExportedWord.substr(CurrentLetter, 1);
+						Sleep(100);
+						CurrentLetter++;
+					}
+					cout << " ";
+				}
+			}
+		}
+		Dialogue.close();
+	}
+	cout << endl;
+	system("pause");
+	return 0;
+}*/
+

@@ -19,9 +19,9 @@ void LCPPTxtProcessor(char ChpNum, int InputNo);
 
 void ChapterProcessor();
 int Chap1();
-/*int Chap2();
+int Chap2();
 int Chap3();
-int Chap4();
+/*int Chap4();
 int Chap5();
 int Chap6();
 int Chap7();
@@ -819,22 +819,9 @@ int Chap1()
 
 int Chap2()
 {
-	char nameinput[9999];
-	ifstream Name("Name.txt");
-	if (!Name)
-	{
-
-	}
-	else
-	{
-		while (!Name.eof())
-		{
-			Name >> nameinput;
-			
-			if (!Name.fail())	break;
-		}
-	}
-	DialogueProcessor('2', nameinput);
+	string name = "NULL";
+	
+	DialogueProcessor('2', name);
 
 	ChpSSUpdater(3);
 	return 3;
@@ -842,6 +829,7 @@ int Chap2()
 
 int Chap3()
 {
+	string name = "NULL";
 	DialogueProcessor('3', name);
 
 	ChpSSUpdater(4);
@@ -1193,7 +1181,7 @@ void GraphicsProcessor(int mode, string type)
 		while (LineOfGraphics != "[break]")
 		{
 			Graphics >> LineOfGraphics;
-			if (Graphics.fail())				return;
+			if (Graphics.fail())					return;
 
 			if (LineOfGraphics != "[break]");		break;
 

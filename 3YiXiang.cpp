@@ -8,14 +8,16 @@
 
 using namespace std;
 
+
+
 void NewGame();
+
 void ContinueGame();
+
 void LearnCpp();
-void LCPPTxtProcessor(char ChpNum);
+void LCPPTxtProcessor(char ChpNum, int InputNo);
+
 void ChapterProcessor();
-void ChpSSUpdater(int ChpSS);
-void DialogueProcessor(char ChpNum, string name);
-void GraphicsProcessor(int mode, string type);
 int Chap1();
 /*int Chap2();
 int Chap3();
@@ -26,6 +28,12 @@ int Chap7();
 int Chap8();
 int Chap9();
 int Chap10();*/
+void ChpSSUpdater(int ChpSS);
+void EndCredits();
+
+void DialogueProcessor(char ChpNum, string name);
+void GraphicsProcessor(int mode, string type);
+
 void GameOver();
 
 
@@ -114,6 +122,8 @@ int main()
 	cout << "Please do not minimise or maximise the window." << endl;
 	Sleep(3000);
 	cout << "To progress the text, press enter at the end of each line." << endl;
+	Sleep(3000);
+	cout << "Make sure all text files are closed before continuing with the game" << endl;
 	Sleep(3000);
 	cout << "This game is able to auto save, so if you need to exit to the menu at any time, press the X on the top right" << endl;
 	Sleep(6000);
@@ -208,17 +218,14 @@ int main()
 
 		if (selection == "1")
 		{
-			system("CLS");
 			NewGame();
 		}
 		else if (selection == "2")
 		{
-			system("CLS");
 			ContinueGame();
 		}
 		else if (selection == "3")
 		{
-			system("CLS");
 			LearnCpp();
 		}
 		else if (selection == "4")
@@ -258,6 +265,7 @@ void NewGame()
 	int GameCS, LoopForever = 0;
 	string ResetFile;
 	fstream GameCompletionStateTxt;
+	ofstream ResetSS;
 	GameCompletionStateTxt.open("GameCompletionState.txt", fstream::in);
 
 
@@ -275,6 +283,7 @@ void NewGame()
 
 	while (LoopForever == 0)
 	{
+		system("cls");
 		cout << "     +    __________       +           *        ____  ___        *                +        +           *         ____" << endl;
 		cout << "         /__    ___/  ________   ________      /    |/   |     __________     _________   ___   ___ . ________ +/_  /" << endl;
 		cout << "       .   /   /     /  ___  /  /  _____/     /          |    /  ___    /    /  ___   /  /  /  /  /  /  _____/   /_/" << endl;
@@ -315,6 +324,39 @@ void NewGame()
 			}
 
 			GameCompletionStateTxt.close();
+
+			ResetSS.open("ChapSaveState.txt");
+
+			if (!ResetSS)
+			{
+				system("CLS");
+				cout << "Error accessing file" << endl;
+				Sleep(3000);
+				return;
+			}
+			else
+			{
+				ResetSS << "1";
+			}
+
+			ResetSS.close();
+
+			ResetSS.open("DialogueSaveState.txt");
+
+			if (!ResetSS)
+			{
+				system("CLS");
+				cout << "Error accessing file" << endl;
+				Sleep(3000);
+				return;
+			}
+			else
+			{
+				ResetSS << "1";
+			}
+
+			ResetSS.close();
+
 			system("cls");
 			ChapterProcessor();
 			return;
@@ -353,6 +395,7 @@ void NewGame()
 				GameCompletionStateTxt.close();
 
 				cout << "                                                         File Wiped!";
+				Sleep(3000);
 			}
 			else if (ResetFile == "2")
 			{
@@ -417,6 +460,7 @@ void ContinueGame()
 
 	while (LoopForever == 0)
 	{
+		system("cls");
 		cout << "     +    __________       +           *        ____  ___        *                +        +           *         ____" << endl;
 		cout << "         /__    ___/  ________   ________      /    |/   |     __________     _________   ___   ___ . ________ +/_  /" << endl;
 		cout << "       .   /   /     /  ___  /  /  _____/     /          |    /  ___    /    /  ___   /  /  /  /  /  /  _____/   /_/" << endl;
@@ -457,6 +501,11 @@ void ContinueGame()
 					GameCompletionStateTxt << "0";
 
 				GameCompletionStateTxt.close();
+				if (GameCS == 2)
+				{
+					cout << "                                                         File Wiped!";
+					Sleep(3000);
+				}
 				NewGame();
 				return;
 			}
@@ -495,6 +544,7 @@ void ContinueGame()
 			Sleep(800);
 			cout << ".";
 			Sleep(800);
+			system("cls");
 			ChapterProcessor();
 			return;
 		}
@@ -528,7 +578,6 @@ void LearnCpp()
 		return;
 	}
 	else { ChapSaveStateTxt >> ChpSS; ChapSaveStateTxt.close(); }
-	ChpSS++;
 	
 	while (LoopForever == 0)
 	{
@@ -542,14 +591,14 @@ void LearnCpp()
 		}
 		cout << "                   Input number of Chapter you want access to OR enter 1 to go back to menu page: ";
 		getline(cin, Selection);
-		if (Selection == "2")			LCPPTxtProcessor('2');
-		else if (Selection == "3")		LCPPTxtProcessor('3');
-		else if (Selection == "4")		LCPPTxtProcessor('4'); 
-		else if (Selection == "5")		LCPPTxtProcessor('5'); 
-		else if (Selection == "6")		LCPPTxtProcessor('6'); 
-		else if (Selection == "7")		LCPPTxtProcessor('7'); 
-		else if (Selection == "8")		LCPPTxtProcessor('8'); 
-		else if (Selection == "9")		LCPPTxtProcessor('9');
+		if (Selection == "2")			LCPPTxtProcessor('2', 2);
+		else if (Selection == "3")		LCPPTxtProcessor('3', 3);
+		else if (Selection == "4")		LCPPTxtProcessor('4', 4); 
+		else if (Selection == "5")		LCPPTxtProcessor('5', 5); 
+		else if (Selection == "6")		LCPPTxtProcessor('6', 6); 
+		else if (Selection == "7")		LCPPTxtProcessor('7', 7); 
+		else if (Selection == "8")		LCPPTxtProcessor('8', 8); 
+		else if (Selection == "9")		LCPPTxtProcessor('9', 9);
 		else if (Selection == "1")
 		{
 			system("CLS");
@@ -577,37 +626,58 @@ void LearnCpp()
 	}
 }
 
-void LCPPTxtProcessor(char ChpNum)
+void LCPPTxtProcessor(char ChpNum, int InputNo)
 {
+	int ChapSaveState;
 	string TextOutput, Txtfilename;
-	ifstream LCPPTxt;
+	ifstream LCPPTxt, ChpSS;
 	char FilenameBuilder[20] = { 'L', 'e', 'a', 'r', 'n', 'C', 'p', 'p', 'C', 'h', 'p' , ChpNum, '.', 't', 'x', 't' };
 	Txtfilename = FilenameBuilder;
 
-	system("cls");
-	LCPPTxt.open(Txtfilename);
-	if (!LCPPTxt)
+	ChpSS.open("ChapterSaveState.txt");
+	if (!ChpSS)
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
 		Sleep(3000);
 		return;
 	}
-	else
-	{
-		while (!LCPPTxt.eof())
-		{
-			LCPPTxt >> TextOutput;
-			if (LCPPTxt.fail())	return;
+	else	ChpSS >> ChapSaveState;
+	ChpSS.close();
 
-			if (TextOutput == "n/")		cout << endl;
-			else						cout << TextOutput << " ";
-		}
-		LCPPTxt.close();
+	if (ChapSaveState < InputNo)
+	{
+		cout << "                                                   Chapter is Locked" << endl;
 		Sleep(3000);
-		cout << endl;
-		cout << "                                        Press ENTER to go back to Learning C++";
-		cin.get();
+		return;
+	}
+	else 
+	{
+		system("cls");
+		LCPPTxt.open(Txtfilename);
+		if (!LCPPTxt)
+		{
+			system("cls");
+			cout << "Error accessing file" << endl;
+			Sleep(3000);
+			return;
+		}
+		else
+		{
+			while (!LCPPTxt.eof())
+			{
+				LCPPTxt >> TextOutput;
+				if (LCPPTxt.fail())	return;
+
+				if (TextOutput == "n/")		cout << endl;
+				else						cout << TextOutput << " ";
+			}
+			LCPPTxt.close();
+			Sleep(3000);
+			cout << endl;
+			cout << "                                        Press ENTER to go back to Learning C++";
+			cin.get();
+		}
 	}
 }
 
@@ -628,18 +698,18 @@ void ChapterProcessor()
 
 	ChapSaveState.close();
 
-	while (ChpSS != 10)
+	while (ChpSS != 0)
 	{
-		if (ChpSS == 0)			ChpSS = Chap1();
-		/*else if (ChpSS == 1)	ChpSS = Chap2();
-		else if (ChpSS == 2)	ChpSS = Chap3();
-		else if (ChpSS == 3)	ChpSS = Chap4();
-		else if (ChpSS == 4)	ChpSS = Chap5();
-		else if (ChpSS == 5)	ChpSS = Chap6();
-		else if (ChpSS == 6)	ChpSS = Chap7();
-		else if (ChpSS == 7)	ChpSS = Chap8();
-		else if (ChpSS == 8)	ChpSS = Chap9();
-		else if (ChpSS == 9)	ChpSS = Chap10();*/
+		if (ChpSS == 1)			ChpSS = Chap1();
+		else if (ChpSS == 2)	ChpSS = Chap2();
+		else if (ChpSS == 3)	ChpSS = Chap3();
+		/*else if (ChpSS == 4)	ChpSS = Chap4();
+		else if (ChpSS == 5)	ChpSS = Chap5();
+		else if (ChpSS == 6)	ChpSS = Chap6();
+		else if (ChpSS == 7)	ChpSS = Chap7();
+		else if (ChpSS == 8)	ChpSS = Chap8();
+		else if (ChpSS == 9)	ChpSS = Chap9();
+		else if (ChpSS == 10)	ChpSS = Chap10();*/
 		else 
 		{
 			cout << "                                   The savestate has been tampered with, please reset" << endl;
@@ -653,6 +723,7 @@ void ChapterProcessor()
 			return;
 		}
 	}
+	// if (ChpSS == 0)		EndCredits();
 }
 
 
@@ -681,7 +752,7 @@ int Chap1()
 			}
 			else
 			{
-				DialogueJump << "31";
+				DialogueJump << "29";
 				DialogueJump.close();
 				break;
 			}
@@ -742,11 +813,11 @@ int Chap1()
 	
 	DialogueProcessor('1', name);
 
-	ChpSSUpdater(1);
-	return 1;
+	ChpSSUpdater(2);
+	return 2;
 }
 
-/*int Chap2()
+int Chap2()
 {
 	char nameinput[9999];
 	ifstream Name("Name.txt");
@@ -765,17 +836,17 @@ int Chap1()
 	}
 	DialogueProcessor('2', nameinput);
 
-	ChpSSUpdater(2);
-	return 2;
+	ChpSSUpdater(3);
+	return 3;
 }
 
 int Chap3()
 {
 	DialogueProcessor('3', name);
 
-	ChpSSUpdater(3);
-	return 3;
-}*/
+	ChpSSUpdater(4);
+	return 4;
+}
 
 /*
 int Chap4()
@@ -783,7 +854,7 @@ int Chap4()
 	DialogueProcessor('4');
 
 	ChpSSUpdater(4);
-	return 4;
+	return 5;
 }
 
 int Chap5()
@@ -791,7 +862,7 @@ int Chap5()
 	DialogueProcessor('5');
 
 	ChpSSUpdater(5);
-	return 5;
+	return 6;
 }
 
 int Chap6()
@@ -799,7 +870,7 @@ int Chap6()
 	DialogueProcessor('6');
 
 	ChpSSUpdater(6);
-	return 6;
+	return 7;
 }
 
 int Chap7()
@@ -807,7 +878,7 @@ int Chap7()
 	DialogueProcessor('7');
 
 	ChpSSUpdater(7);
-	return 7;
+	return 8;
 }
 
 int Chap8()
@@ -815,7 +886,7 @@ int Chap8()
 	DialogueProcessor('8');
 
 	ChpSSUpdater(8);
-	return 8;
+	return 9;
 }
 
 int Chap9()
@@ -823,7 +894,7 @@ int Chap9()
 	DialogueProcessor('9');
 
 	ChpSSUpdater(9);
-	return 9;
+	return 10;
 }
 
 int Chap10()
@@ -831,7 +902,7 @@ int Chap10()
 	DialogueProcessor('10');
 
 	ChpSSUpdater(10);
-	return 10;
+	return 0;
 }*/
 
 void ChpSSUpdater(int ChpSS)
@@ -849,7 +920,7 @@ void ChpSSUpdater(int ChpSS)
 	cout << endl;
 	cout << endl;
 	cout << endl;
-	cout << "                                                   Chapter " << (ChpSS + 1) << " Unlocked" << endl;
+	cout << "                                                   Chapter " << ChpSS << " Unlocked" << endl;
 	cout << "                                         --------------------------------------" << endl;
 	Sleep(3000);
 	system("cls");
@@ -880,6 +951,64 @@ void ChpSSUpdater(int ChpSS)
 
 	ChapSaveState.close();
 }
+
+/*void EndCredits()
+{
+	system("cls");
+	cout << endl;
+	cout << endl;
+	cout << "                                                      Characters:" << endl;
+	Sleep(500);
+	cout << endl;
+	cout << "                                                    RoBuff as RoBuff/RoBugg/Hyperlink RoBugg" << endl;
+	Sleep(500);
+	cout << "                                                  TecMagus as TecMagus/IT" << endl;
+	Sleep(500);
+	cout << "                                                       You as Protagonist" << endl;
+	Sleep(500);
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "                                                         Roles:" << endl;
+	Sleep(500);
+	cout << endl;
+	cout << "                                                Directed by  Nicholas Wang, Yi Xiang, Aaron and Han" << endl;
+	Sleep(500);
+	cout << "                                                Produced by  Nicholas Wang, Yi Xiang, aark017 and Han" << endl;
+	Sleep(500);
+	cout << "                                         Executive Producer  Nicholas Wang" << endl;
+	Sleep(500);
+	cout << "                                                 Transcript  Aaron" << endl;
+	Sleep(500);
+	cout << "                                       Interactive elements  Yi Xiang" << endl;
+	Sleep(500);
+	cout << "                                                   Graphics  Han" << endl;
+	Sleep(500);
+	cout << endl;
+	cout << "                                              And Lastly, You as the Player" << endl;
+	Sleep(1000);
+	cout << "                                              Thank you for playing our game" << endl;
+
+	Sleep(10000);
+	system("color 08");
+	Sleep(1000);
+	system("cls");
+	Sleep(4000);
+
+	ofstream GameCS("GameCompletionState.txt");
+	if (!GameCS)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return;
+	}
+	else
+	{
+		GameCS << "2";
+	}
+	GameCS.close();
+}*/
 
 
 
@@ -915,7 +1044,7 @@ void DialogueProcessor(char ChpNum, string name)
 		{
 			DSaveStateTxt >> DSaveState;
 			DSaveStateTxt.close();
-			for (int counter = 1; counter <= (DSaveState - 1);)
+			for (int counter = 1; counter <= (DSaveState - 1) ;)
 			{
 				DialogueTxt >> DialogueOutput;
 				if (DialogueOutput == "n/")	counter++;
@@ -956,6 +1085,7 @@ void DialogueProcessor(char ChpNum, string name)
 					}
 					else
 					{
+						if (DialogueOutput == "(Y=1/N=0)")	cout << "(Y=1/N=0) ";
 						cout << endl;
 						DSaveState++;
 						DSaveStateTxt << DSaveState;
@@ -976,7 +1106,7 @@ void DialogueProcessor(char ChpNum, string name)
 					else
 					{
 						cout << endl;
-						DSaveStateTxt << "0";
+						DSaveStateTxt << "1";
 						DSaveStateTxt.close();
 						cin.get();
 						return;
@@ -1060,12 +1190,12 @@ void GraphicsProcessor(int mode, string type)
 			}
 			if (LineOfGraphics == type)		Condition = 1;
 		}
-		while (LineOfGraphics != "stop")
+		while (LineOfGraphics != "[break]")
 		{
 			Graphics >> LineOfGraphics;
 			if (Graphics.fail())				return;
 
-			if (LineOfGraphics != "stop");		break;
+			if (LineOfGraphics != "[break]");		break;
 
 			MaxLength = LineOfGraphics.length();
 
@@ -1124,6 +1254,5 @@ void GameOver()
 	system("cls");
 	Sleep(4000);
 }
-
 
 

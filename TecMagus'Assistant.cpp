@@ -895,7 +895,7 @@ int Chap10()
 
 void ChpSSUpdater(int ChpSS)
 {
-	ofstream ChapSaveState;
+	ofstream ChapSaveState, DialogueSaveState;
 
 	Sleep(1000);
 	system("color 08");
@@ -926,6 +926,18 @@ void ChpSSUpdater(int ChpSS)
 	system("cls");
 	Sleep(4000);
 
+	DialogueSaveState.open("DialogueSaveState.txt");
+	if (!DialogueSaveState)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return;
+	}
+	else	DialogueSaveState << "1";
+
+	DialogueSaveState.close();
+
 	ChapSaveState.open("ChapSaveState.txt");
 
 	if (!ChapSaveState)
@@ -938,6 +950,7 @@ void ChpSSUpdater(int ChpSS)
 	else	ChapSaveState << ChpSS;
 
 	ChapSaveState.close();
+
 }
 
 /*void EndCredits()

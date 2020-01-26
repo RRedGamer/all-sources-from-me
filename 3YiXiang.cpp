@@ -1034,20 +1034,30 @@ void GraphicsProcessor(int mode, string type)
 	else
 	{
 		system("cls");
-		cout << "Error accessing file" << endl;
+		cout << "Error with Graphics Mode" << endl;
 		Sleep(3000);
 		return;
 	}
 
 	if (!Graphics)
-		cout << "Fek" << endl;
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return;
+	}
 	else
 	{
 		while (Condition = 0)
 		{
 			Graphics >> LineOfGraphics;
-			if (Graphics.fail())			return;
-
+			if (Graphics.fail())
+			{
+				system("cls");
+				cout << "Error with Graphics Type" << endl;
+				Sleep(3000);
+				return;
+			}
 			if (LineOfGraphics == type)		Condition = 1;
 		}
 		while (LineOfGraphics != "stop")

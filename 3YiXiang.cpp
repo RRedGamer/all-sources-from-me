@@ -12,11 +12,12 @@ void NewGame();
 void ContinueGame();
 void LearnCpp();
 void LCPPTxtProcessor(char ChpNum);
-void DialogueProcessor(char ChpNum, string name);
-void GameOver();
+void ChapterProcessor();
 void ChpSSUpdater(int ChpSS);
+void DialogueProcessor(char ChpNum, string name);
+void GraphicsProcessor(int mode, string type);
 int Chap1();
-int Chap2();
+/*int Chap2();
 int Chap3();
 int Chap4();
 int Chap5();
@@ -24,43 +25,83 @@ int Chap6();
 int Chap7();
 int Chap8();
 int Chap9();
-int Chap10();
+int Chap10();*/
+void GameOver();
 
-/*int main()
+
+/*void Battle(char ChpNum);
+
+int main()
 {
-	int MaxLength;
-	string LineOfGraphics;
+	Battle('2');
+}
 
-	fstream Graphics;
-	Graphics.open("Graphics.txt", fstream::in);
+void Battle(char ChpNum)
+{
+	int EnemyHP = 5, PlayerHP = 3, ReadQn, QnNum;
+	string BattleTextfile, QnOutput, CorrectAnswer, InputAnswer;
 
-	if (!Graphics)
-		cout << "Fek" << endl;
+	srand(time(NULL));
+
+	char FilenameBuilder[20] = { 'B','a','t','t','l','e','C','h','p', ChpNum , '.', 't', 'x', 't' };
+	BattleTextfile = FilenameBuilder;
+
+	fstream BattleQns;
+	BattleQns.open(BattleTextfile, fstream::in);
+
+	if (!BattleQns)
+		cout << "Error accessing file" << endl;
 	else
 	{
-		while (!Graphics.eof())
+		while (!BattleQns.eof())
 		{
-			Graphics >> LineOfGraphics;
-			if (Graphics.fail())			break;
-
-			MaxLength = LineOfGraphics.length();
-
-			for (int i = 0; i <= MaxLength; i++)
+			while (EnemyHP != 0 && PlayerHP != 0)
 			{
-				if (LineOfGraphics.substr(i, 1) == "?")
-					cout << " ";
-				else
-					cout << LineOfGraphics.substr(i, 1);
-			}
+				if (BattleQns.fail())			break;
+				while (QnOutput != "endcode")
+				{
+					BattleQns >> QnOutput;
 
-			cout << endl;
+					if (QnOutput.substr(0, 1) == ",")
+					{
+						cout << "\t";
+						QnOutput = QnOutput.substr(1);
+					}
+
+					if (QnOutput == "n/" || QnOutput == "endcode")
+						cout << endl;
+					else
+						cout << QnOutput << " ";
+
+					Sleep(100);
+				}
+
+				BattleQns >> CorrectAnswer;
+
+				cout << "Fill in the blank: ";
+				cin >> InputAnswer;
+
+				system("cls");
+				cout << "Enemy HP: " << EnemyHP << endl;
+				cout << "Your HP: " << PlayerHP << endl;
+
+				if (InputAnswer == CorrectAnswer)
+				{
+					EnemyHP--;
+				}
+				else
+				{
+					PlayerHP--;
+				}
+
+				Sleep(1000);
+
+				system("cls");
+				cout << "Enemy HP: " << EnemyHP << endl;
+				cout << "Your HP: " << PlayerHP << endl;
+			}
 		}
 	}
-
-	Graphics.close();
-
-	system("pause");
-	return 0;
 }*/
 
 int main()
@@ -272,6 +313,7 @@ void NewGame()
 			}
 
 			GameCompletionStateTxt.close();
+			system("cls");
 			ChapterProcessor();
 			return;
 		}
@@ -330,7 +372,7 @@ void NewGame()
 			}
 			else
 			{
-				cout << "\n\n                                             Error computing...please try again";
+				cout << "\n\n                                          Error computing...please try again";
 				Sleep(1200);
 			}
 		}
@@ -485,8 +527,6 @@ void LearnCpp()
 	while (LoopForever == 0)
 	{
 		system("cls");
-		cout << endl;
-		cout << endl;
 		for (int i = 2; i <= 10; i++)
 		{
 			if (i <= ChpSS)		cout << "                                                       Chapter " << i << endl;
@@ -530,8 +570,6 @@ void LearnCpp()
 		}
 	}
 }
-
-
 
 void LCPPTxtProcessor(char ChpNum)
 {
@@ -586,7 +624,7 @@ void ChapterProcessor()
 	while (ChpSS != 10)
 	{
 		if (ChpSS == 0)			ChpSS = Chap1();
-		else if (ChpSS == 1)	ChpSS = Chap2();
+		/*else if (ChpSS == 1)	ChpSS = Chap2();
 		else if (ChpSS == 2)	ChpSS = Chap3();
 		else if (ChpSS == 3)	ChpSS = Chap4();
 		else if (ChpSS == 4)	ChpSS = Chap5();
@@ -594,7 +632,7 @@ void ChapterProcessor()
 		else if (ChpSS == 6)	ChpSS = Chap7();
 		else if (ChpSS == 7)	ChpSS = Chap8();
 		else if (ChpSS == 8)	ChpSS = Chap9();
-		else if (ChpSS == 9)	ChpSS = Chap10();
+		else if (ChpSS == 9)	ChpSS = Chap10();*/
 		else 
 		{
 			cout << "                                   The savestate has been tampered with, please reset" << endl;
@@ -614,13 +652,12 @@ void ChapterProcessor()
 
 int Chap1()
 {
-	bool Answer;
 	string InputChoice;
 	string name = "NULL";
 	ofstream DialogueJump;
 	DialogueProcessor('1', name);
-
-	if (Answer == true)
+	getline(cin, InputChoice);
+	if (InputChoice == "1")
 	{
 		DialogueJump.open("DialogueSaveState.txt");
 		if (!DialogueJump)
@@ -636,25 +673,28 @@ int Chap1()
 			DialogueJump.close();
 		}
 	}
-	else 
+	else if (InputChoice == "2")
 	{
 		DialogueProcessor('1', name);
 		GameOver();
 		return 0;
 	}
+	else{}
+
+
 	DialogueProcessor('1', name);
 	ifstream Name("Name.txt");
 	getline(cin, name);
 	cout << "screen: is " << name << " your name? (Y/N) ";
 	getline(cin, InputChoice);
-	cout << "";
+	cout << "";*/
 
 
 	ChpSSUpdater(1);
 	return 1;
 }
 
-int Chap2()
+/*int Chap2()
 {
 	char nameinput[9999];
 	ifstream Name("Name.txt");
@@ -683,7 +723,7 @@ int Chap3()
 
 	ChpSSUpdater(3);
 	return 3;
-}
+}*/
 
 /*
 int Chap4()
@@ -741,6 +781,25 @@ int Chap10()
 	ChpSSUpdater(10);
 	return 10;
 }*/
+
+void ChpSSUpdater(int ChpSS)
+{
+	ofstream ChapSaveState;
+
+	ChapSaveState.open("ChapSaveState.txt");
+
+	if (!ChapSaveState)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		return;
+	}
+	else	ChapSaveState << ChpSS;
+
+	ChapSaveState.close();
+}
+
+
 
 void DialogueProcessor(char ChpNum, string name)
 {
@@ -802,7 +861,7 @@ void DialogueProcessor(char ChpNum, string name)
 						system("CLS");
 					}
 				}
-				else if (DialogueOutput == "(Y = 1/N = 0)")
+				else if (DialogueOutput == "(Y=1/N=0)" || DialogueOutput == "[break]")
 				{
 					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
 					if (!DSaveStateTxt)
@@ -821,6 +880,25 @@ void DialogueProcessor(char ChpNum, string name)
 						return;
 					}
 				}
+				else if (DialogueOutput == "[reset]")
+				{
+					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
+					if (!DSaveStateTxt)
+					{
+						system("cls");
+						cout << "Error accessing file" << endl;
+						Sleep(1000);
+						return;
+					}
+					else
+					{
+						cout << endl;
+						DSaveStateTxt << "0";
+						DSaveStateTxt.close();
+						cin.get();
+						return;
+					}
+				}
 				else if (DialogueOutput == ".")
 				{
 					cout << DialogueOutput << " ";
@@ -828,14 +906,8 @@ void DialogueProcessor(char ChpNum, string name)
 				}
 				else if (DialogueOutput == "[name]:")
 				{
-					cout << name << " ";
+					cout << name << ": ";
 					Sleep(80);
-				}
-				else if (DialogueOutput == "[break]")
-				{
-					cin.get();
-					system("CLS");
-					return;
 				}
 				else
 				{
@@ -847,7 +919,56 @@ void DialogueProcessor(char ChpNum, string name)
 	}
 }
 
+void GraphicsProcessor(int mode, string type)
+{
+	int Condition = 0;
+	int MaxLength;
+	string LineOfGraphics;
 
+	ifstream Graphics;
+	if (mode == 1)			Graphics.open("Background.txt");
+	else if (mode == 2)		Graphics.open("Robuff.txt");
+	else if (mode == 3)		Graphics.open("TecMagus.txt");
+	else
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(1000);
+		return;
+	}
+
+	if (!Graphics)
+		cout << "Fek" << endl;
+	else
+	{
+		while (Condition = 0)
+		{
+			Graphics >> LineOfGraphics;
+			if (Graphics.fail())			return;
+
+			if (LineOfGraphics == type)		Condition = 1;
+		}
+		while (LineOfGraphics != "stop")
+		{
+			Graphics >> LineOfGraphics;
+			if (Graphics.fail())				return;
+
+			if (LineOfGraphics != "stop");		break;
+
+			MaxLength = LineOfGraphics.length();
+
+			for (int i = 0; i <= MaxLength; i++)
+			{
+				if (LineOfGraphics.substr(i, 1) == "?")
+					cout << " ";
+				else
+					cout << LineOfGraphics.substr(i, 1);
+			}
+			cout << endl;
+		}
+	}
+	Graphics.close();
+}
 
 void GameOver()
 {
@@ -892,24 +1013,6 @@ void GameOver()
 	Sleep(4000);
 }
 
-
-
-void ChpSSUpdater(int ChpSS)
-{
-	ofstream ChapSaveState;
-
-	ChapSaveState.open("ChapSaveState.txt");
-
-	if (!ChapSaveState)
-	{
-		system("cls");
-		cout << "Error accessing file" << endl;
-		return;
-	}
-	else	ChapSaveState << ChpSS;
-
-	ChapSaveState.close();
-}
 
 /*#include <iostream>
 #include <Windows.h>

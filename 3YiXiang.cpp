@@ -265,6 +265,7 @@ void NewGame()
 	{
 		system("CLS");
 		cout << "Error accessing file" << endl;
+		Sleep(3000);
 		return;
 	}
 	else
@@ -305,6 +306,7 @@ void NewGame()
 			{
 				system("CLS");
 				cout << "Error accessing file" << endl;
+				Sleep(3000);
 				return;
 			}
 			else
@@ -340,6 +342,7 @@ void NewGame()
 				{
 					system("CLS");
 					cout << "Error accessing file" << endl;
+					Sleep(3000);
 					return;
 				}
 				else
@@ -404,6 +407,7 @@ void ContinueGame()
 	{
 		system("CLS");
 		cout << "Error accessing file" << endl;
+		Sleep(3000);
 		return;
 	}
 	else
@@ -446,6 +450,7 @@ void ContinueGame()
 				{
 					system("CLS");
 					cout << "Error accessing file" << endl;
+					Sleep(3000);
 					return;
 				}
 				else
@@ -519,6 +524,7 @@ void LearnCpp()
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
+		Sleep(3000);
 		return;
 	}
 	else { ChapSaveStateTxt >> ChpSS; ChapSaveStateTxt.close(); }
@@ -584,7 +590,7 @@ void LCPPTxtProcessor(char ChpNum)
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
-		Sleep(1000);
+		Sleep(3000);
 		return;
 	}
 	else
@@ -615,6 +621,7 @@ void ChapterProcessor()
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
+		Sleep(3000);
 		return;
 	}
 	else	ChapSaveState >> ChpSS;
@@ -652,43 +659,88 @@ void ChapterProcessor()
 
 int Chap1()
 {
+	int LoopForever = 0;
 	string InputChoice;
 	string name = "NULL";
 	ofstream DialogueJump;
+
 	DialogueProcessor('1', name);
-	getline(cin, InputChoice);
-	if (InputChoice == "1")
+	while (LoopForever = 0)
 	{
-		DialogueJump.open("DialogueSaveState.txt");
-		if (!DialogueJump)
+		cout << " ";
+		getline(cin, InputChoice);
+		if (InputChoice == "1")
 		{
-			system("cls");
-			cout << "Error accessing file" << endl;
-			Sleep(1000);
+			DialogueJump.open("DialogueSaveState.txt");
+			if (!DialogueJump)
+			{
+				system("cls");
+				cout << "Error accessing file" << endl;
+				Sleep(3000);
+				return 0;
+			}
+			else
+			{
+				DialogueJump << "31";
+				DialogueJump.close();
+				break;
+			}
+		}
+		else if (InputChoice == "0")
+		{
+			DialogueProcessor('1', name);
+			GameOver();
 			return 0;
 		}
 		else
 		{
-			DialogueJump << "41";
-			DialogueJump.close();
+			system("cls");
+			cout << "screen: input invalid, please try again" << endl;
+			cout << "screen: do you want to install now? (Y=1/N=0)";
 		}
 	}
-	else if (InputChoice == "2")
-	{
-		DialogueProcessor('1', name);
-		GameOver();
-		return 0;
-	}
-	else{}
-
 
 	DialogueProcessor('1', name);
-	ifstream Name("Name.txt");
-	getline(cin, name);
-	cout << "screen: is " << name << " your name? (Y/N) ";
-	getline(cin, InputChoice);
-	cout << "";*/
 
+	ofstream Name("Name.txt");
+	
+	if (!Name)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return 0;
+	}
+	else
+	{
+		while (LoopForever = 0)
+		{
+			getline(cin, name);
+			system("cls");
+			cout << "screen: is " << name << " your name? (Y=1/N=0) ";
+			getline(cin, InputChoice);
+			if (InputChoice == "1") 
+			{ 
+				system("cls"); break; 
+			}
+			else if (InputChoice == "0")
+			{
+				system("cls");
+				cout << "screen: please input your name: ";
+			}
+			else
+			{
+				system("cls");
+				cout << "screen: there is a problem with registering your answer" << endl;
+				Sleep(2000);
+				cout << "screen: please input your name again: ";
+			}
+		}
+		Name << name;
+		Name.close();
+	}
+	
+	DialogueProcessor('1', name);
 
 	ChpSSUpdater(1);
 	return 1;
@@ -786,12 +838,42 @@ void ChpSSUpdater(int ChpSS)
 {
 	ofstream ChapSaveState;
 
+	Sleep(1000);
+	system("color 08");
+	Sleep(1000);
+	system("cls");
+	Sleep(4000);
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "                                                   Chapter " << (ChpSS + 1) << " Unlocked" << endl;
+	cout << "                                         --------------------------------------" << endl;
+	Sleep(3000);
+	system("cls");
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << endl;
+	cout << "                                          Check Learn C++ for more information" << endl;
+	cout << "                                         --------------------------------------" << endl;
+	Sleep(3000);
+	system("color 08");
+	Sleep(1000);
+	system("cls");
+	Sleep(4000);
+
 	ChapSaveState.open("ChapSaveState.txt");
 
 	if (!ChapSaveState)
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
+		Sleep(3000);
 		return;
 	}
 	else	ChapSaveState << ChpSS;
@@ -810,12 +892,13 @@ void DialogueProcessor(char ChpNum, string name)
 	char FilenameBuilder[20] = { 'D','i','a','l','o','g','u','e','C','h','p', ChpNum, '.', 't', 'x', 't' };
 	Dfilename = FilenameBuilder;
 
+	system("cls");
 	DialogueTxt.open(Dfilename);
 	if (!DialogueTxt)
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
-		Sleep(1000);
+		Sleep(3000);
 		return;
 	}
 	else
@@ -825,7 +908,7 @@ void DialogueProcessor(char ChpNum, string name)
 		{
 			system("cls");
 			cout << "Error accessing file" << endl;
-			Sleep(1000);
+			Sleep(3000);
 			return;
 		}
 		else
@@ -848,7 +931,7 @@ void DialogueProcessor(char ChpNum, string name)
 					{
 						system("cls");
 						cout << "Error accessing file" << endl;
-						Sleep(1000);
+						Sleep(3000);
 						return;
 					}
 					else
@@ -868,7 +951,7 @@ void DialogueProcessor(char ChpNum, string name)
 					{
 						system("cls");
 						cout << "Error accessing file" << endl;
-						Sleep(1000);
+						Sleep(3000);
 						return;
 					}
 					else
@@ -887,7 +970,7 @@ void DialogueProcessor(char ChpNum, string name)
 					{
 						system("cls");
 						cout << "Error accessing file" << endl;
-						Sleep(1000);
+						Sleep(3000);
 						return;
 					}
 					else
@@ -896,6 +979,25 @@ void DialogueProcessor(char ChpNum, string name)
 						DSaveStateTxt << "0";
 						DSaveStateTxt.close();
 						cin.get();
+						return;
+					}
+				}
+				else if (DialogueOutput == "[cls]")
+				{
+					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
+					if (!DSaveStateTxt)
+					{
+						system("cls");
+						cout << "Error accessing file" << endl;
+						Sleep(3000);
+						return;
+					}
+					else
+					{
+						cout << endl;
+						DSaveState++;
+						DSaveStateTxt << DSaveState;
+						DSaveStateTxt.close();
 						return;
 					}
 				}
@@ -933,7 +1035,7 @@ void GraphicsProcessor(int mode, string type)
 	{
 		system("cls");
 		cout << "Error accessing file" << endl;
-		Sleep(1000);
+		Sleep(3000);
 		return;
 	}
 
@@ -1014,68 +1116,4 @@ void GameOver()
 }
 
 
-/*#include <iostream>
-#include <Windows.h>
-#include <cmath>
-#include <fstream>
-#include <string>
-#include <cstdlib>
-#include <ctime>
-using namespace std;
-using namespace std;
-int main()
-{
-  int LetterCount, CurrentLetter, ScrollSpeed;
-	string ExportedWord;
-	fstream Dialogue;
-	Dialogue.open("Dialogue.txt", fstream::in);
-	if (!Dialogue)
-		cout << "Error: Dialogue file not present!" << endl;
-	else
-	{
-		while (!Dialogue.eof())
-		{
-			Dialogue >> ExportedWord;
-			LetterCount = ExportedWord.length();
-			if (ExportedWord.substr(0, 1) == "x")
-			{
-				if (ExportedWord.substr(1, 1) == ".")
-					ScrollSpeed = 500;
-				else
-					ScrollSpeed = 100;
-				CurrentLetter = 1;
-				while (LetterCount != CurrentLetter)
-				{
-					cout << ExportedWord.substr(CurrentLetter, 1);
-					Sleep(ScrollSpeed);
-					CurrentLetter++;
-				}
-				cout << " ";
-			}
-			else
-			{
-				if (ExportedWord == "n/")
-				{
-					Sleep(3000);
-					cout << endl;
-				}
-				else
-				{
-					CurrentLetter = 0;
-					while (LetterCount != CurrentLetter)
-					{
-						cout << ExportedWord.substr(CurrentLetter, 1);
-						Sleep(100);
-						CurrentLetter++;
-					}
-					cout << " ";
-				}
-			}
-		}
-		Dialogue.close();
-	}
-	cout << endl;
-	system("pause");
-	return 0;
-}*/
 

@@ -31,7 +31,7 @@ int Chap10();*/
 void ChpSSUpdater(int ChpSS);
 void EndCredits();
 
-void DialogueProcessor(char ChpNum, string name);
+void DialogueProcessor(char ChpNum);
 void GraphicsProcessor(int mode, string type);
 
 void GameOver();
@@ -604,6 +604,7 @@ void LCPPTxtProcessor(char ChpNum, int InputNo)
 				if (LCPPTxt.fail())	return;
 
 				if (TextOutput == "n/")		cout << endl;
+				if (TextOutput == "t/")		cout << "\t";
 				else						cout << TextOutput << " ";
 			}
 			LCPPTxt.close();
@@ -663,11 +664,10 @@ void ChapterProcessor()
 int Chap1()
 {
 	int LoopForever = 0;
-	string InputChoice;
-	string name = "NULL";
+	string InputChoice, name;
 	ofstream DialogueJump;
 
-	DialogueProcessor('1', name);
+	DialogueProcessor('1');
 	while (LoopForever == 0)
 	{
 		cout << " ";
@@ -718,7 +718,7 @@ int Chap1()
 		}
 	}
 
-	DialogueProcessor('1', name);
+	DialogueProcessor('1');
 
 	ofstream Name("Name.txt");
 	
@@ -754,11 +754,26 @@ int Chap1()
 				cout << "screen: please input your name again: ";
 			}
 		}
+
 		Name << name;
 		Name.close();
+
+		DialogueJump.open("DialogueSaveState.txt");
+		if (!DialogueJump)
+		{
+			system("cls");
+			cout << "Error accessing DialogueSaveState file" << endl;
+			Sleep(3000);
+			return 0;
+		}
+		else
+		{
+			DialogueJump << "31";
+			DialogueJump.close();
+		}
 	}
 	
-	DialogueProcessor('1', name);
+	DialogueProcessor('1');
 
 	ChpSSUpdater(2);
 	return 2;
@@ -766,9 +781,10 @@ int Chap1()
 
 int Chap2()
 {
-	string name = "NULL";
+	ifstream Name("Name.txt");
 	
-	cout << "eat shit it works" << endl;
+	DialogueProcessor('2');
+	BattleMechanics('2', 8, 3);
 
 	ChpSSUpdater(3);
 	return 3;
@@ -847,7 +863,9 @@ void ChpSSUpdater(int ChpSS)
 	system("color 08");
 	Sleep(1000);
 	system("cls");
+	system("color 0f");
 	Sleep(4000);
+
 	cout << endl;
 	cout << endl;
 	cout << endl;
@@ -870,6 +888,7 @@ void ChpSSUpdater(int ChpSS)
 	system("color 08");
 	Sleep(1000);
 	system("cls");
+	system("color 0f");
 	Sleep(4000);
 
 	DialogueSaveState.open("DialogueSaveState.txt");
@@ -959,11 +978,11 @@ void ChpSSUpdater(int ChpSS)
 
 
 
-void DialogueProcessor(char ChpNum, string name)
+void DialogueProcessor(char ChpNum)
 {
 	int DSaveState;
-	string DialogueOutput, Dfilename;
-	ifstream DialogueTxt;
+	string DialogueOutput, Dfilename, name;
+	ifstream DialogueTxt, Name;
 	fstream DSaveStateTxt;
 	char FilenameBuilder[20] = { 'D','i','a','l','o','g','u','e','C','h','p', ChpNum, '.', 't', 'x', 't' };
 	Dfilename = FilenameBuilder;
@@ -991,17 +1010,17 @@ void DialogueProcessor(char ChpNum, string name)
 		{
 			DSaveStateTxt >> DSaveState;
 			DSaveStateTxt.close();
-			for (int counter = 1; counter <= (DSaveState - 1) ;)
+			for (int counter = 1; counter <= (DSaveState - 1);)
 			{
 				DialogueTxt >> DialogueOutput;
 				if (DialogueOutput == "n/" || DialogueOutput == "[reset]" || DialogueOutput == "[break]" || DialogueOutput == "[cls]" || DialogueOutput == "(Y/N)")		counter++;
-				system("CLS");
 			}
 			while (!DialogueTxt.eof())
 			{
 				DialogueTxt >> DialogueOutput;
 				if (DialogueOutput == "n/")
 				{
+					cin.get();
 					DSaveStateTxt.open("DialogueSaveState.txt", fstream::out);
 					if (!DSaveStateTxt)
 					{
@@ -1012,7 +1031,6 @@ void DialogueProcessor(char ChpNum, string name)
 					}
 					else
 					{
-						cin.get();
 						DSaveState++;
 						DSaveStateTxt << DSaveState;
 						DSaveStateTxt.close();
@@ -1023,7 +1041,6 @@ void DialogueProcessor(char ChpNum, string name)
 				{
 					if (DialogueOutput == "(Y/N)")	cout << "(Y/N) ";
 					return;
-					
 				}
 				else if (DialogueOutput == "[reset]")
 				{
@@ -1060,18 +1077,37 @@ void DialogueProcessor(char ChpNum, string name)
 						DSaveState++;
 						DSaveStateTxt << DSaveState;
 						DSaveStateTxt.close();
+						system("cls");
+					}
+				}
+				else if (DialogueOutput == "[name]:")
+				{
+					Name.open("Name.txt");
+					if (!Name)
+					{
+						system("cls");
+						cout << "Error accessing Name file" << endl;
+						Sleep(3000);
 						return;
 					}
+					else
+					{
+						while (!Name.eof())
+						{
+							Name >> name;
+							if (Name.fail())	break;
+							cout << name << " ";
+							Sleep(80);
+						}
+
+						Name.close();
+					}
+					cout << ": ";
 				}
 				else if (DialogueOutput == ".")
 				{
 					cout << DialogueOutput << " ";
 					Sleep(200);
-				}
-				else if (DialogueOutput == "[name]:")
-				{
-					cout << name << ": ";
-					Sleep(80);
 				}
 				else
 				{
@@ -1144,87 +1180,58 @@ void GraphicsProcessor(int mode, string type)
 	Graphics.close();
 }
 
-/*void BattleMechanics(char ChpNum, int EnemyHP, int PlayerHP)
+void BattleMechanics(char ChpNum, int EnemyHP, int PlayerHP)
 {
-	QuestionNum = 1;
-	string BattleTextFile, QnOutput, CorrectAnswer = "Invalid_Ans", InputAnswer;
+	int QuestionNum = 1;
+	string CorrectAnswer = "Invalid_Ans", InputAnswer;
 
-	fstream BattleQns;
-	BattleQns.open(BattleTextFile, fstream::in);
-
-	if (!BattleQns)
+	while (EnemyHP != 0 && PlayerHP != 0)
 	{
+		cout << "Question " << QuestionNum << ":" << endl;
+
+		CorrectAnswer = BattleTextProcessor(ChpNum, QuestionNum);
+
+		QuestionNum++;
+
+		cin >> InputAnswer;
+
 		system("cls");
-		cout << "Error accessing file" << endl;
-		Sleep(3000);
-		return;
-	}
-	else
-	{
-		while (!BattleQns.eof() && EnemyHP != 0 && PlayerHP != 0)
+		cout << "Enemy HP: " << EnemyHP << endl;
+		cout << "Your HP: " << PlayerHP << endl;
+
+		if (InputAnswer == CorrectAnswer)
 		{
-			cout << "Question " << QuestionNum << ":" << endl;
-			cout << "=========================================================================" << endl;
-
-			while (QnOutput != "EndQn")
-			{
-				BattleQns >> QnOutput;
-				if (BattleQns.fail())			break;
-
-				if (QnOutput == "n/" || QnOutput == "EndQn")
-					cout << endl;
-				else if (QnOutput == "t/")
-					cout << "   ";
-				else
-					cout << QnOutput << " ";
-
-				Sleep(100);
-			}
-			cout << "=========================================================================" << endl;
-			QnOutput = ".";
-			QuestionNum++;
-
-			BattleQns >> CorrectAnswer;
-			cout << "Fill in the blank: ";
-			cin >> InputAnswer;
-
-			system("cls");
-			cout << "Enemy HP: " << EnemyHP << endl;
-			cout << "Your HP: " << PlayerHP << endl;
-
-			if (InputAnswer == CorrectAnswer)
-			{
-				EnemyHP--;
-			}
-			else
-			{
-				PlayerHP--;
-			}
-
-			Sleep(1000);
-
-			system("cls");
-			cout << "Enemy HP: " << EnemyHP << endl;
-			cout << "Your HP: " << PlayerHP << endl;
-
-			Sleep(1000);
-			system("cls");
-
-			CorrectAnswer = "InvalidAns";
+			EnemyHP--;
+		}
+		else
+		{
+			PlayerHP--;
 		}
 
-		if (EnemyHP == 0)
-		else if (PlayerHP == 0)
-		else if (BattleQns.eof())
-			cout << "it is end of file"
+		Sleep(1000);
+
+		system("cls");
+		cout << "Enemy HP: " << EnemyHP << endl;
+		cout << "Your HP: " << PlayerHP << endl;
+
+		Sleep(1000);
+		system("cls");
+
+		CorrectAnswer = "InvalidAns";
 	}
+
+	if (EnemyHP == 0)
+		return;
+	else if (PlayerHP == 0)
+		GameOver();
 
 	system("pause");
 }
 
-void BattleTextProcessor(char ChpNum, int MaxQns)
+string BattleTextProcessor(char ChpNum, int QuestionNum)
 {
-	string BattleTextFile, QnsOutput = "NULL", CorrectAnswer = "Invalid_Ans", InputAnswer;
+	int CurrentQn = 1;
+	string BattleTextFile, QnsOutput = ".", Answer;
 
 	char FileNameBuilder[20] = { 'B','a','t','t','l','e','C','h','p', ChpNum , '.', 't', 'x', 't' };
 
@@ -1238,23 +1245,49 @@ void BattleTextProcessor(char ChpNum, int MaxQns)
 		system("cls");
 		cout << "Error accessing file" << endl;
 		Sleep(3000);
-		return;
 	}
 	else
 	{
 		while (!BattleQns.eof())
 		{
 			BattleQns >> QnsOutput;
+			while (CurrentQn < QuestionNum)
+			{
+				if (BattleQns.fail())			break;
+				if (QnsOutput == "[Answer]")
+					CurrentQn++;
+
+				BattleQns >> QnsOutput;
+			}
 			if (BattleQns.fail())			break;
 
-			if (QnsOutput == "[EndQn]")
+			while (QnsOutput != "[EndQn]")
 			{
-				
+				if (QnsOutput == "n/")
+					cout << endl;
+				else if (QnsOutput == "t/")
+					cout << "    ";
+				else
+					cout << QnsOutput << " ";
+				BattleQns >> QnsOutput;
+
+				Sleep(100);
 			}
-			if (QnsOut)
+
+			BattleQns >> Answer >> QnsOutput;
+
+			if (QnsOutput != "[Answer]")
+			{
+				system("cls");
+				cout << "The file has been tempered with, please contact the developers" << endl;
+			}
+			else
+				return Answer;
 		}
 	}
-}*/
+}
+
+
 
 
 

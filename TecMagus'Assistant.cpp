@@ -736,7 +736,7 @@ int Chap1()
 	ofstream DialogueJump;
 
 	DialogueProcessor('1', name);
-	while (LoopForever = 0)
+	while (LoopForever == 0)
 	{
 		cout << " ";
 		getline(cin, InputChoice);
@@ -784,7 +784,7 @@ int Chap1()
 	}
 	else
 	{
-		while (LoopForever = 0)
+		while (LoopForever == 0)
 		{
 			getline(cin, name);
 			system("cls");
@@ -1048,7 +1048,7 @@ void DialogueProcessor(char ChpNum, string name)
 			for (int counter = 1; counter <= (DSaveState - 1) ;)
 			{
 				DialogueTxt >> DialogueOutput;
-				if (DialogueOutput == "n/")	counter++;
+				if (DialogueOutput == "n/" || DialogueOutput == "[reset]" || DialogueOutput == "[break]" || DialogueOutput == "[cls]" || DialogueOutput == "(Y=1/N=0)")		counter++;
 				system("CLS");
 			}
 			while (!DialogueTxt.eof())
@@ -1066,7 +1066,6 @@ void DialogueProcessor(char ChpNum, string name)
 					}
 					else
 					{
-						cout << endl;
 						cin.get();
 						DSaveState++;
 						DSaveStateTxt << DSaveState;
@@ -1077,7 +1076,6 @@ void DialogueProcessor(char ChpNum, string name)
 				else if (DialogueOutput == "(Y=1/N=0)" || DialogueOutput == "[break]")
 				{
 					if (DialogueOutput == "(Y=1/N=0)")	cout << "(Y=1/N=0) ";
-					cout << endl;
 					return;
 					
 				}
@@ -1199,6 +1197,120 @@ void GraphicsProcessor(int mode, string type)
 	}
 	Graphics.close();
 }
+
+void BattleMechanics(char ChpNum, int EnemyHP, int PlayerHP)
+{
+	QuestionNum = 1;
+	string BattleTextFile, QnOutput, CorrectAnswer = "Invalid_Ans", InputAnswer;
+
+	fstream BattleQns;
+	BattleQns.open(BattleTextFile, fstream::in);
+
+	if (!BattleQns)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return;
+	}
+	else
+	{
+		while (!BattleQns.eof() && EnemyHP != 0 && PlayerHP != 0)
+		{
+			cout << "Question " << QuestionNum << ":" << endl;
+			cout << "=========================================================================" << endl;
+
+			while (QnOutput != "EndQn")
+			{
+				BattleQns >> QnOutput;
+				if (BattleQns.fail())			break;
+
+				if (QnOutput == "n/" || QnOutput == "EndQn")
+					cout << endl;
+				else if (QnOutput == "t/")
+					cout << "   ";
+				else
+					cout << QnOutput << " ";
+
+				Sleep(100);
+			}
+			cout << "=========================================================================" << endl;
+			QnOutput = ".";
+			QuestionNum++;
+
+			BattleQns >> CorrectAnswer;
+			cout << "Fill in the blank: ";
+			cin >> InputAnswer;
+
+			system("cls");
+			cout << "Enemy HP: " << EnemyHP << endl;
+			cout << "Your HP: " << PlayerHP << endl;
+
+			if (InputAnswer == CorrectAnswer)
+			{
+				EnemyHP--;
+			}
+			else
+			{
+				PlayerHP--;
+			}
+
+			Sleep(1000);
+
+			system("cls");
+			cout << "Enemy HP: " << EnemyHP << endl;
+			cout << "Your HP: " << PlayerHP << endl;
+
+			Sleep(1000);
+			system("cls");
+
+			CorrectAnswer = "InvalidAns";
+		}
+
+		if (EnemyHP == 0)
+		else if (PlayerHP == 0)
+		else if (BattleQns.eof())
+			cout << "it is end of file"
+	}
+
+	system("pause");
+}
+
+void BattleTextProcessor(char ChpNum, int MaxQns)
+{
+	string BattleTextFile, QnsOutput = "NULL", CorrectAnswer = "Invalid_Ans", InputAnswer;
+
+	char FileNameBuilder[20] = { 'B','a','t','t','l','e','C','h','p', ChpNum , '.', 't', 'x', 't' };
+
+	BattleTextFile = FileNameBuilder;
+
+	ifstream BattleQns;
+	BattleQns.open(BattleTextFile);
+
+	if (!BattleQns)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+		return;
+	}
+	else
+	{
+		while (!BattleQns.eof())
+		{
+			BattleQns >> QnsOutput;
+			if (BattleQns.fail())			break;
+
+			if (QnsOutput == "[EndQn]")
+			{
+				
+			}
+			if (QnsOut)
+		}
+	}
+}
+
+
 
 void GameOver()
 {

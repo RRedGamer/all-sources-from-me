@@ -1,0 +1,236 @@
+========================================================================= n/
+#include <iostream> n/
+n/
+using _________ std; n/
+n/
+int main() n/
+{ n/
+t/ int, low = 4, high = 20; n/
+n/
+t/ cout << low; n/
+t/ cout << high; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/ 
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+namespace [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+n/
+using namespace std; n/
+n/
+___ main() n/
+{ n/
+t/ int a = 5,  b = 6; n/
+n/
+t/ cout << a << " + " << b << " = " << a + b; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/ 
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+int [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ double C, F; n/
+n/
+t/ cout << "Enter temperature in Celsius: "; n/
+t/ ___ >> C; n/
+n/
+t/ F = 9.0 / 5.0 * C + 32.0; n/
+n/
+t/ cout << C << " Celsius = " << F << " Fahrenheit." << endl; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/ 
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+cin [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+n/
+using namespace std;/n
+n/
+int main() n/
+{ n/
+t/ int TotalSeconds = 2000, Minutes, Seconds; n/
+n/
+t/ Minutes = TotalSeconds / 60; n/
+t/ Seconds = TotalSeconds _ 60; n/
+n/
+t/ cout << "Total seconds 2000 can be converted to " << Minutes << " minutes and " << Seconds << " seconds" << endl; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/ 
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+% [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+#include <cmath> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ _____ double PI = 3.14159; n/
+t/ double radius, circumference; n/
+n/
+t/ radius = 2.0; n/
+t/ circumference = 2.0 * PI * radius; n/
+n/
+t/ cout << "The circumference of the circle is " << circumference << endl; n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+const [Answer]
+
+
+========================================================================= n/
+#include <iostream> n/
+#include <_____> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ double a, b, c; n/
+n/
+t/ a = 3; n/
+t/ b = 4; n/
+n/
+t/ c = sqrt(pow(a, 2) + pow(b, 2)); n/
+t/ cout << "a = 3, b = 4, c = " << c << endl; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+cmath [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+#include <cstdlib> n/
+#include <ctime> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ int randomNumber; n/
+n/
+t/ srand(__________); n/
+n/
+t/ cout << "Roll a die now!" << endl; n/
+t/ randomNumber = rand() % 6 + 1; n/
+t/ cout << "The number you have is " << randomNumber << endl; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+time(NULL) [Answer]
+
+
+========================================================================= n/
+#include <iostream> n/
+#inclde <iomanip> n/
+#include <string> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ char gender; n/
+t/ int age; n/
+t/ double weight n/
+t/ string name n/
+n/
+t/ cout << "Please input the name, gender, age, weight: "; n/
+t/ cin >> name >> gender >> age >> weight; n/
+t/ cout << fixed << left << ____________(2); n/
+t/ cout << setw(20) << "Name" << setw(15) << "Gender" << setw(15) << "age" << "Weight" << endl; n/
+t/ cout << setw(20)  << name << setw(15) << gender << setw(15) << age << weight << endl; n/
+n/
+t/ system("pause"); n/
+t/ return 0; n/
+} n/
+========================================================================= n/
+Fill in the blank: [EndQn]
+
+setprecision [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+#include <string> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ string Line1, Line2; n/
+t/ int pos; n/
+n/
+t/ Line1 = "It is 4am"; n/
+t/ Line2 = Line1.______(6, 3); n/
+n/
+t/ cout << Line1 << endl << "The time is: " << Line2 << endl; n/
+n/
+t/ system("pause");
+t/ return 0;
+} n/
+========================================================================= n/
+Fill in the blanks: [EndQn]
+
+substr [Answer]
+
+========================================================================= n/
+#include <iostream> n/
+#include <cmath> n/
+n/
+using namespace std; n/
+n/
+int main() n/
+{ n/
+t/ double angle, radian; n/
+t/ const double PI = 3.14159 n/
+n/
+t/ cout << "Enter in the degree to convert to radian: "; n/
+t/ cin >> angle; n/
+n
+t/ radian = angle * PI / 180.0; n/
+n/
+t/ cout << "The equivalent radian is " << radian << endl; n/
+n/
+t/ system("pause"); n/
+t/ ______ 0; n/
+} n/
+========================================================================= n/
+Fill in the blanks: [EndQn]
+
+return [Answer]

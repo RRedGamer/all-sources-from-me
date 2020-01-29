@@ -1,5 +1,0 @@
-﻿  TecMagus' Assistant.cpp
-e:\tecmagus'_assistant\tecmagus'_assistant\tecmagus' assistant.cpp(707): error C2660: 'DialogueProcessor': function does not take 2 arguments
-  e:\tecmagus'_assistant\tecmagus'_assistant\tecmagus' assistant.cpp(34): note: see declaration of 'DialogueProcessor'
-e:\tecmagus'_assistant\tecmagus'_assistant\tecmagus' assistant.cpp(787): error C3861: 'BattleMechanics': identifier not found
-e:\tecmagus'_assistant\tecmagus'_assistant\tecmagus' assistant.cpp(1192): error C3861: 'BattleTextProcessor': identifier not found

@@ -1,0 +1,54 @@
+The word "cout" will output a text that you can read off a monitor. n/
+cout << "Hello" will display "Hello" n/
+In order for any code to work, you need to #include <iostream>. n/
+You also need "using namespace std;" in order to organise different names used in your program. n/
+In order to end a program, use system("pause") followed by return 0 n/
+This will make the user able to press any key in order to continue the program n/
+Also, by adding //, any comment after that will not be put into the code n/
+We can also choose to store value into something called a variable. n/
+This variable needs to be named first. E.g. a, b, c n/
+We need to declare these variables using data types. n/
+Examples include int a; int b; n/
+There are certain rules of identifiers. n/
+They can be made up of any combination of letters, digits, or underscores, according to these rules. n/
+1. Begin with a letter or underscore _ n/
+2. The rest of the characters may be letters, numbers or _ n/
+3. The variable is case sensitive e.g. First is not the same as first n/
+4. Less than 32 characters in length. n/
+ n/
+Invalid identifiers and their reasons are below n/
+1. 1AB3 - cannot start with a number n/
+2. nice value - cannot have spaces n/
+3. E%6 - cannot have special characters, in this case % n/
+4. computerprogrammingismyfavouritesubject - more than 32 characters n/
+
+Data types are types of data a variable can contain. n/
+Data types are listed below: n/
+1. int n/
+t/	These are positive or negative whole numbers, any decimal place here will be truncated. n/
+t/	E.g. 0, 1234, -987 n/
+2. double n/
+t/	These are called Floating Point numbers which do include decimal points. n/
+t/	E.g. -6.12, -4.2, 3.141 n/
+3. char n/
+t/	A single letter from A to Z, a digit from 0 to 9, or other symbols. A char variable  n/
+t/	must be enclosed in a single quotation mark. n/
+t/	E.g. 'A', '-' n/
+4. bool n/
+t/	A boolean variable is only either true (1) or false (0). n/
+5. string n/
+t/	It is a sequence of characters enclosed in double quotation. n/
+t/	E.g. "I have done this" n/
+t/	Since this is not a basic data type, you need to #include string. n/
+	 n/
+Operators n/
+The "=" operator assigns the value on the RHS to the variable on the LHS. n/
+E.g. int low, high; n/
+low = 4; n/
+high = 20; n/
+Also, if we did low = high, in this case, low would become high which is 20, it is no longer 4 n/
+If you were to put high = high + low, where high = 20 and low = 4, then high would now be 20 + 4 which is 24. n/
+ n/
+cin allows the user to input data from their keyboard to assign a variable. n/
+For example, cin >> x; This will wait for the user to input a value into the keyboard n/
+After inputting the value and pressing "Enter", the entered value will be stored in x. n/

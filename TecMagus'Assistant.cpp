@@ -1127,7 +1127,7 @@ void GraphicsProcessor(int mode, string type)
 
 	ifstream Graphics;
 	if (mode == 1)			Graphics.open("Background.txt");
-	else if (mode == 2)		Graphics.open("Robuff.txt");
+	else if (mode == 2)		Graphics.open("RoBuff.txt");
 	else if (mode == 3)		Graphics.open("TecMagus.txt");
 	else
 	{

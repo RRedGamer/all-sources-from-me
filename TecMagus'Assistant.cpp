@@ -29,10 +29,10 @@ int Chap8();
 int Chap9();
 int Chap10();*/
 void ChpSSUpdater(int ChpSS);
-void EndCredits();
+/*void EndCredits();*/
 
 void DialogueProcessor(char ChpNum);
-void GraphicsProcessor(int mode, string type);
+void GraphicsProcessor(string mode, string type);
 
 void GameOver();
 
@@ -169,19 +169,11 @@ int main()
 
 	system("cls");
 	Sleep(500);
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << endl << endl << endl << endl << endl << endl;
 	cout << "                                                    Game Closing";
-	Sleep(800);
-	cout << ".";
-	Sleep(800);
-	cout << ".";
-	Sleep(800);
-	cout << ".";
+	Sleep(800); cout << ".";  
+	Sleep(800); cout << "."; 
+	Sleep(800); cout << ".";
 	Sleep(800);
 	return 0;
 }
@@ -228,12 +220,9 @@ void NewGame()
 		if (GameCS == 0)
 		{
 			cout << "\n                                                 New game starting";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
+			Sleep(800); cout << "."; 
+			Sleep(800); cout << "."; 
+			Sleep(800); cout << "."; 
 			Sleep(800);
 
 			GameCompletionStateTxt.open("GameCompletionState.txt", fstream::out);
@@ -327,19 +316,11 @@ void NewGame()
 			else if (ResetFile == "2")
 			{
 				system("CLS");
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << endl << endl << endl << endl << endl << endl;
 				cout << "                                                  Returning to menu screen";
-				Sleep(800);
-				cout << ".";
-				Sleep(800);
-				cout << ".";
-				Sleep(800);
-				cout << ".";
+				Sleep(800); cout << "."; 
+				Sleep(800); cout << ".";
+				Sleep(800); cout << ".";
 				Sleep(800);
 				return;
 			}
@@ -410,12 +391,9 @@ void ContinueGame()
 		else if (GameCS == 1)
 		{
 			cout << "\n                                                   Continuing Game";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
+			Sleep(800); cout << ".";
+			Sleep(800); cout << ".";
+			Sleep(800); cout << ".";
 			Sleep(800);
 			system("cls");
 			ChapterProcessor();
@@ -453,19 +431,11 @@ void ContinueGame()
 			else if (StartNewGame == "2")
 			{
 				system("CLS");
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
-				cout << endl;
+				cout << endl << endl << endl << endl << endl << endl;
 				cout << "                                                  Returning to menu screen";
-				Sleep(800);
-				cout << ".";
-				Sleep(800);
-				cout << ".";
-				Sleep(800);
-				cout << ".";
+				Sleep(800); cout << ".";
+				Sleep(800); cout << ".";
+				Sleep(800); cout << ".";
 				Sleep(800);
 				return;
 			}
@@ -529,19 +499,11 @@ void LearnCpp()
 		else if (Selection == "1")
 		{
 			system("CLS");
-			cout << endl;
-			cout << endl;
-			cout << endl;
-			cout << endl;
-			cout << endl;
-			cout << endl;
+			cout << endl << endl << endl << endl << endl << endl;
 			cout << "                                                  Returning to menu screen";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
-			Sleep(800);
-			cout << ".";
+			Sleep(800); cout << ".";
+			Sleep(800); cout << ".";
+			Sleep(800); cout << ".";
 			Sleep(800);
 			return;
 		}
@@ -575,12 +537,7 @@ void LCPPTxtProcessor(char ChpNum, int InputNo)
 	if (ChapSaveState < InputNo)
 	{
 		system("cls");
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
-		cout << endl;
+		cout << endl << endl << endl << endl << endl << endl;
 		cout << "                                                   Chapter is Locked" << endl;
 		Sleep(3000);
 		return;
@@ -704,7 +661,7 @@ int Chap1()
 			{
 				DialogueJump << "26";
 				DialogueJump.close();
-				DialogueProcessor('1', name);
+				DialogueProcessor('1');
 				GameOver();
 				return 1;
 			}
@@ -712,9 +669,8 @@ int Chap1()
 		else
 		{
 			system("cls");
-			cout << "screen: input invalid, please try again" << endl;
-			Sleep(2000);
 			cout << "screen: do you want to install now? (Y/N)";
+			cout << "screen: input invalid, please try again" << endl;
 		}
 	}
 
@@ -749,9 +705,8 @@ int Chap1()
 			else
 			{
 				system("cls");
-				cout << "screen: there is a problem with registering your answer" << endl;
-				Sleep(2000);
 				cout << "screen: please input your name again: ";
+				cout << "screen: there is a problem with registering your answer" << endl;
 			}
 		}
 
@@ -784,7 +739,6 @@ int Chap2()
 	ifstream Name("Name.txt");
 	
 	DialogueProcessor('2');
-	BattleMechanics('2', 8, 3);
 
 	ChpSSUpdater(3);
 	return 3;
@@ -866,22 +820,12 @@ void ChpSSUpdater(int ChpSS)
 	system("color 0f");
 	Sleep(4000);
 
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << endl << endl << endl << endl << endl << endl;
 	cout << "                                                   Chapter " << ChpSS << " Unlocked" << endl;
 	cout << "                                         --------------------------------------" << endl;
 	Sleep(3000);
 	system("cls");
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << endl << endl << endl << endl << endl << endl;
 	cout << "                                          Check Learn C++ for more information" << endl;
 	cout << "                                         --------------------------------------" << endl;
 	Sleep(3000);
@@ -1119,16 +1063,17 @@ void DialogueProcessor(char ChpNum)
 	}
 }
 
-void GraphicsProcessor(int mode, string type)
+void GraphicsProcessor(string mode, string type)
 {
-	int Condition = 0;
+	int LoopForever = 0;
 	int MaxLength;
 	string LineOfGraphics;
 
 	ifstream Graphics;
-	if (mode == 1)			Graphics.open("Background.txt");
-	else if (mode == 2)		Graphics.open("RoBuff.txt");
-	else if (mode == 3)		Graphics.open("TecMagus.txt");
+	if (mode == "Background")						Graphics.open("Background.txt");
+	else if (mode == "RoBuff")						Graphics.open("RoBuff.txt");
+	else if (mode == "TecMagus")					Graphics.open("TecMagus.txt");
+	else if (mode == "NULL" || type == "NULL")		return;
 	else
 	{
 		system("cls");
@@ -1146,7 +1091,7 @@ void GraphicsProcessor(int mode, string type)
 	}
 	else
 	{
-		while (Condition = 0)
+		while (LoopForever == 0)
 		{
 			Graphics >> LineOfGraphics;
 			if (Graphics.fail())
@@ -1156,14 +1101,14 @@ void GraphicsProcessor(int mode, string type)
 				Sleep(3000);
 				return;
 			}
-			if (LineOfGraphics == type)		Condition = 1;
+			if (LineOfGraphics == type)		break;
 		}
 		while (LineOfGraphics != "[break]")
 		{
 			Graphics >> LineOfGraphics;
 			if (Graphics.fail())					return;
 
-			if (LineOfGraphics != "[break]")		break;
+			if (LineOfGraphics == "[break]")		break;
 
 			MaxLength = LineOfGraphics.length();
 
@@ -1178,6 +1123,8 @@ void GraphicsProcessor(int mode, string type)
 		}
 	}
 	Graphics.close();
+
+	cout << endl;
 }
 
 void BattleMechanics(char ChpNum, int EnemyHP, int PlayerHP)
@@ -1295,12 +1242,7 @@ void GameOver()
 {
 	system("cls");
 	Sleep(500);
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << endl << endl << endl << endl << endl << endl;
 	cout << "                                                    ";
 	cout << "G";	Sleep(150);
 	cout << " ";	Sleep(150);
@@ -1321,11 +1263,7 @@ void GameOver()
 	cout << "R";
 
 	Sleep(2000);
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
+	cout << endl << endl << endl << endl << endl;
 	cout << "                                               ";
 	system("pause");
 	Sleep(1000);
@@ -1337,3 +1275,147 @@ void GameOver()
 }
 
 
+
+
+// RandQnsNumOrderGen
+
+/*int NumOrderStore[9999];
+
+void RandNumOrderGen(int NumOfQns)
+{
+	int Num, LoopForever = 0;
+	bool IsItRepeated;
+
+	for (int i = 0; i <= (NumOfQns + 10); i++)
+		NumOrderStore[i] = 0;
+
+	srand(time(NULL));
+	for (int i = 0; i <= (NumOfQns - 1); i++)
+	{
+		while (LoopForever == 0)
+		{
+			Num = rand() % NumOfQns + 1;
+			IsItRepeated = false;
+			for (int x = 0; x <= (NumOfQns - 1); x++)
+			{
+				if (Num == NumOrderStore[x])
+				{
+					IsItRepeated = true;
+					break;
+				}
+			}
+			if (IsItRepeated == false)	break;
+		}
+		NumOrderStore[i] = Num;
+	}
+}*/
+
+// Current Battle Processor (INCOMPLETE)
+
+/*bool BattleMechanics(char ChpNum, int EnemyHP, int PlayerHP)
+{
+	int TotalQns = EnemyHP + PlayerHP - 1, ChosenQns;
+	string CorrectAnswer, InputAnswer;
+
+	RandNumOrderGen(TotalQns);
+
+	for (int i = 0; i <= (TotalQns - 1); i++)
+	{
+		cout << "Question " << (i + 1) << ":" << endl;
+		ChosenQns = NumOrderStore[i];
+		CorrectAnswer = BattleTextProcessor(ChpNum, ChosenQns);
+
+		cin >> InputAnswer;
+
+		system("cls");
+		cout << "Enemy HP: " << EnemyHP << endl;
+		cout << "Your HP: " << PlayerHP << endl;
+
+		if (InputAnswer == CorrectAnswer)
+		{
+			EnemyHP--;
+		}
+		else
+		{
+			PlayerHP--;
+		}
+
+		Sleep(1000);
+
+		system("cls");
+		cout << "Enemy HP: " << EnemyHP << endl;
+		cout << "Your HP: " << PlayerHP << endl;
+
+		Sleep(1000);
+		system("cls");
+		if (EnemyHP == 0)
+			return true;
+		else if(PlayerHP == 0)
+		{
+			system("cls");
+			cout << "";
+			cout << "";
+			GameOver();
+			return false;
+		}
+
+	}
+}
+
+string BattleTextProcessor(char ChpNum, int QuestionNum)
+{
+	string BattleTextFile, QnsOutput = ".", Answer;
+
+	char FileNameBuilder[20] = { 'B','a','t','t','l','e','C','h','p', ChpNum , '.', 't', 'x', 't' };
+
+	BattleTextFile = FileNameBuilder;
+
+	ifstream BattleQns;
+	BattleQns.open(BattleTextFile);
+
+	if (!BattleQns)
+	{
+		system("cls");
+		cout << "Error accessing file" << endl;
+		Sleep(3000);
+	}
+	else
+	{
+		while (!BattleQns.eof())
+		{
+			while (QnsOutput != QuestionNum)
+			{
+				BattleQns >> QnsOutput;
+
+				if (BattleQns.fail())			break;
+				if (QnsOutput == "[Answer]")
+					CurrentQn++;
+			}
+
+			BattleQns >> QnsOutput;
+
+			while (QnsOutput != "[EndQn]")
+			{
+				if (QnsOutput == "n/")
+					cout << endl;
+				else if (QnsOutput == "t/")
+					cout << "    ";
+				else
+					cout << QnsOutput << " ";
+				BattleQns >> QnsOutput;
+
+				Sleep(115);
+			}
+
+			BattleQns >> Answer >> QnsOutput;
+
+			if (QnsOutput != "[Answer]")
+			{
+				system("cls");
+				cout << "The file has been tempered with, please contact the developers" << endl;
+			}
+			else
+				return Answer;
+		}
+	}
+}*/
